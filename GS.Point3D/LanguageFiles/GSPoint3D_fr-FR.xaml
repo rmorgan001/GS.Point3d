@@ -1,0 +1,80 @@
+﻿<!--
+    /* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see<https: //www.gnu.org/licenses/> .
+*/-->
+    <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="FirstMsg">Bienvenue dans GS.Point3D !. Pour commencer, cliquez sur les 3 barres pour les paramètres.</system:String>
+    <system:String x:Key="FirstMsg1">Cliquez sur le bouton «Sélectionner» pour trouver un télescope ASCOM. Cliquez ensuite sur</system:String>
+    <system:String x:Key="FirstMsg2">l'icône du télescope se connecter..</system:String>
+    <system:String x:Key="FirstMsg3">Si vous trouvez ce programme utile, pensez à faire un don modeste pour mon café.</system:String>
+    <system:String x:Key="FirstMsg4">La moitié de tous les dons vont à une organisation éducative à but non lucratif 501(c)(3) pour l'astronomie.</system:String>
+
+    <!--Title bar-->
+    <system:String x:Key="titleName">GS.Point3D</system:String>
+    <system:String x:Key="FileName">GSPoint3D</system:String>
+
+    <!--Exceptions -->
+    <system:String x:Key="exError">Erreur</system:String>
+    <system:String x:Key="exNoSelected">Aucun télescope sélectionné</system:String>
+    <system:String x:Key="exNoAlignmentMode">AlignmentMode non pris en charge</system:String>
+    <system:String x:Key="exRestart">Un redémarrage est requis</system:String>
+
+    <!--Dialog -->
+    <system:String x:Key="diaAccept">Valider</system:String>
+    <system:String x:Key="diaCancel">Annuler</system:String>
+    <system:String x:Key="diaOk">Ok</system:String>
+    <system:String x:Key="diaStart">Démarrer</system:String>
+    <system:String x:Key="diaStop">Arrêtez</system:String>
+
+    <!--Converters -->
+    <system:String x:Key="cvtMustBool">Doit être booléen</system:String>
+    <system:String x:Key="cvtInvNumber">Numéro invalide</system:String>
+    <system:String x:Key="cvtRequired">Requis</system:String>
+
+    <!--Flip Card-->
+    <system:String x:Key="topRaShort">AD</system:String>
+    <system:String x:Key="topDecShort">Dec</system:String>
+    <system:String x:Key="topAz">Az</system:String>
+    <system:String x:Key="topAlt">Alt</system:String>
+    <system:String x:Key="topLha">LHA</system:String>
+    <system:String x:Key="topName">Nom</system:String>
+    <system:String x:Key="dCamera">Caméra</system:String>
+    <system:String x:Key="dRaAxis">RA°</system:String>
+    <system:String x:Key="dDecAxis">Dec°</system:String>
+    <system:String x:Key="dEdit">Éditer</system:String>
+    <system:String x:Key="SideRealTime">Sidérale</system:String>
+    <system:String x:Key="FlipCard">Flip carte</system:String>
+
+    <!--3DModel -->
+    <system:String x:Key="dSettings">Réglages</system:String>
+    <system:String x:Key="dResetView">Réinitialiser la perspective</system:String>
+    <system:String x:Key="dModelType">Modèle</system:String>
+
+    <!--Settings -->
+    <system:String x:Key="optLight">Clair</system:String>
+    <system:String x:Key="optDark">Sombre</system:String>
+    <system:String x:Key="optPrimaryColor">Principale</system:String>
+    <system:String x:Key="optAccentColor">Secondaire</system:String>
+    <system:String x:Key="Interval">Intervalle(ms)</system:String>
+    <system:String x:Key="Select">Sélectionner</system:String>
+    <system:String x:Key="Telescope">Télescope</system:String>
+    <system:String x:Key="Open">Ouvert</system:String>
+    <system:String x:Key="On">Sur</system:String>
+    <system:String x:Key="Chooser">ASCOM Sélecteur</system:String>
+    <system:String x:Key="Auto">Connexion automatique</system:String>
+    <system:String x:Key="Connect">Relier</system:String>
+    <system:String x:Key="Language">Langue</system:String>
+
+</ResourceDictionary>

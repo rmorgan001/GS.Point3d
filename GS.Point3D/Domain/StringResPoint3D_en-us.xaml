@@ -1,0 +1,80 @@
+﻿<!--
+    /* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see<https: //www.gnu.org/licenses/> .
+*/-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="FirstMsg">Welcome to GS.Point3D!.  To get started click the 3 bars for the settings. </system:String>
+    <system:String x:Key="FirstMsg1">Click the 'Select' button to find an ASCOM telescope.  Then click the telescope icon</system:String>
+    <system:String x:Key="FirstMsg2">to connect.</system:String>
+    <system:String x:Key="FirstMsg3">If you find this program useful please consider donating a modest amount for my coffee.</system:String>
+    <system:String x:Key="FirstMsg4">Half of all donations go to a nonprofit 501(c)(3) educational organization for astronomy.</system:String>
+
+    <!--Title bar-->
+    <system:String x:Key="titleName">GS.Point3D</system:String>
+    <system:String x:Key="FileName">GSPoint3D</system:String>
+
+    <!--Exceptions -->
+    <system:String x:Key="exError">Error</system:String>
+    <system:String x:Key="exNoSelected">No telescope selected</system:String>
+    <system:String x:Key="exNoAlignmentMode">AlignmentMode not supported</system:String>
+    <system:String x:Key="exRestart">Restart is required</system:String>
+
+    <!--Dialog -->
+    <system:String x:Key="diaAccept">Accept</system:String>
+    <system:String x:Key="diaCancel">Cancel</system:String>
+    <system:String x:Key="diaOk">Ok</system:String>
+    <system:String x:Key="diaStart">Start</system:String>
+    <system:String x:Key="diaStop">Stop</system:String>
+
+    <!--Converters -->
+    <system:String x:Key="cvtMustBool">Must be boolean</system:String>
+    <system:String x:Key="cvtInvNumber">Invalid Number</system:String>
+    <system:String x:Key="cvtRequired">Required</system:String>
+
+    <!--Flip Card-->
+    <system:String x:Key="topRaShort">RA</system:String>
+    <system:String x:Key="topDecShort">Dec</system:String>
+    <system:String x:Key="topAz">Az</system:String>
+    <system:String x:Key="topAlt">Alt</system:String>
+    <system:String x:Key="topLha">LHA</system:String>
+    <system:String x:Key="topName">Name</system:String>
+    <system:String x:Key="dCamera">Camera</system:String>
+    <system:String x:Key="dRaAxis">RA°</system:String>
+    <system:String x:Key="dDecAxis">Dec°</system:String>
+    <system:String x:Key="dEdit">Edit</system:String>
+    <system:String x:Key="SideRealTime">Sidereal</system:String>
+    <system:String x:Key="FlipCard">Flip Card</system:String>
+
+    <!--3DModel -->
+    <system:String x:Key="dSettings">Settings</system:String>
+    <system:String x:Key="dResetView">Reset Perspective</system:String>
+    <system:String x:Key="dModelType">Model</system:String>
+
+    <!--Settings -->
+    <system:String x:Key="optLight">Light</system:String>
+    <system:String x:Key="optDark">Dark</system:String>
+    <system:String x:Key="optPrimaryColor">Primary</system:String>
+    <system:String x:Key="optAccentColor">Accent</system:String>
+    <system:String x:Key="Interval">Interval(ms)</system:String>
+    <system:String x:Key="Select">Select</system:String>
+    <system:String x:Key="Telescope">Telescope</system:String>
+    <system:String x:Key="Open">Open</system:String>
+    <system:String x:Key="On">On</system:String>
+    <system:String x:Key="Chooser">ASCOM Chooser</system:String>
+    <system:String x:Key="Auto">Auto connect</system:String>
+    <system:String x:Key="Connect">Connect</system:String>
+    <system:String x:Key="Language">Language</system:String>
+
+</ResourceDictionary>
