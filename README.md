@@ -4,7 +4,7 @@
 [![Windows](https://img.shields.io/github/v/release/rmorgan001/GS.Point3D)](https://github.com/rmorgan001/GS.Point3D/releases)
 
 ## Website
-## http://www.greenswamp.org/GSPoint3D
+## https://www.greenswamp.org/gspoint3d
 
 ![Alt text](Misc/main1.jpg?raw=true "GS.Point3D")
 
