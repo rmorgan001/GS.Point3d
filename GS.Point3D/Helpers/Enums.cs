@@ -34,6 +34,13 @@ namespace GS.Point3D.Helpers
         pierWest = 1
     }
 
+    public enum Sop
+    {
+        None = -1,
+        East = 0,
+        West = 1
+    }
+
     public enum AlignMode
     {
         algUnknown,

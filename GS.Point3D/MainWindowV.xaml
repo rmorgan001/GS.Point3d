@@ -51,7 +51,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
         <controls:WindowTitleBarBasic Grid.Row="0" />
         <md:DialogHost Grid.Row="1" CloseOnClickAway="True" IsOpen="{Binding IsDialogOpen}" DialogContent="{Binding DialogContent}">
             <Grid>
-                <md:DrawerHost BorderThickness="2" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                <md:DrawerHost BorderThickness="2" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" BorderBrush="{DynamicResource MaterialDesignDivider}" >
                     <md:DrawerHost.LeftDrawerContent>
                         <Grid Width="450" ShowGridLines="False">
                             <Grid.RowDefinitions>
@@ -66,7 +66,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" Grid.Column="0">
-                                <ToggleButton DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="5" Style="{StaticResource MaterialDesignHamburgerToggleButton}" Command="{x:Static md:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                                <ToggleButton DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="5" Style="{StaticResource MaterialDesignHamburgerToggleButton}" Command="{x:Static md:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" ToolTip="{StaticResource dSettings}" IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
                                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="{DynamicResource PrimaryHueMidBrush}" Content="{StaticResource dSettings}"/>
                             </Grid>
                             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" IsEnabled="{Binding Connected, Converter={StaticResource InvBol}}">
@@ -216,7 +216,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <ToggleButton IsChecked="False" x:Name="MenuToggleButton" Command="{x:Static md:DrawerHost.OpenDrawerCommand}" Style="{StaticResource MaterialDesignHamburgerToggleButton}" CommandParameter="{x:Static Dock.Left}" />
+                            <ToggleButton IsChecked="False" x:Name="MenuToggleButton" Command="{x:Static md:DrawerHost.OpenDrawerCommand}" Style="{StaticResource MaterialDesignHamburgerToggleButton}" CommandParameter="{x:Static Dock.Left}" ToolTip="{StaticResource dSettings}" />
                             <Label Margin="0,0,0,5" Opacity=".5" Content="{Binding Description}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="{Binding DescriptionVis, Converter={StaticResource BoolToClap}}" />
                         </StackPanel>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,8">
@@ -245,9 +245,10 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                         </controls:HelixViewport3D>
                         <md:Flipper  Visibility="{Binding FlipCardVis, Converter={StaticResource BoolToClap}}" Grid.Row="1" Style="{DynamicResource MaterialDesignCardFlipper}" Margin="10" VerticalAlignment="Bottom"  HorizontalAlignment="Left" >
                             <md:Flipper.FrontContent>
-                                <Border MinWidth="130" MinHeight="130"  Margin="3" CornerRadius="5" BorderThickness="3" BorderBrush="DimGray" Opacity=".8" Background="{StaticResource MaterialDesignToolBarBackground}">
+                                <Border MinWidth="150" Margin="3" CornerRadius="5" BorderThickness="3" BorderBrush="DimGray" Opacity=".8" Background="{StaticResource MaterialDesignToolBarBackground}">
                                     <Grid Margin="10">
                                         <Grid.RowDefinitions>
+                                            <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
@@ -279,28 +280,33 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                             <TextBlock Text="{Binding Source={StaticResource topLha}, StringFormat='{}{0}:'}" HorizontalAlignment="Left" />
                                             <TextBlock Margin="10,0,0,0" Text="{Binding Lha}" Foreground="Red"  HorizontalAlignment="Right" />
                                         </DockPanel>
-                                        <DockPanel Grid.Row="5" Visibility="{Binding SideVis, Converter={StaticResource BoolToClap}}">
+                                        <DockPanel Grid.Row="5" Visibility="{Binding SopVis, Converter={StaticResource BoolToClap}}">
+                                            <TextBlock Text="{Binding Source={StaticResource Sop}, StringFormat='{}{0}:'}" HorizontalAlignment="Left" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Sop}" Foreground="Red" HorizontalAlignment="Right" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="6" Visibility="{Binding SideVis, Converter={StaticResource BoolToClap}}">
                                             <TextBlock Text="{Binding Source={StaticResource SideRealTime}, StringFormat='{}{0}:'}" HorizontalAlignment="Left" />
                                             <TextBlock Margin="10,0,0,0" Text="{Binding SiderealTime}" Foreground="Red"  HorizontalAlignment="Right" />
                                         </DockPanel>
-                                        <DockPanel Grid.Row="6" Visibility="{Binding RaAxisVis, Converter={StaticResource BoolToClap}}">
+                                        <DockPanel Grid.Row="7" Visibility="{Binding RaAxisVis, Converter={StaticResource BoolToClap}}">
                                             <TextBlock Text="{Binding Source={StaticResource dRaAxis}, StringFormat='{}{0}:'}" HorizontalAlignment="Left" />
                                             <TextBlock Margin="10,0,0,0" Text="{Binding DegX}" Foreground="Red"  HorizontalAlignment="Right" />
                                         </DockPanel>
-                                        <DockPanel  Grid.Row="7" Visibility="{Binding DecAxisVis, Converter={StaticResource BoolToClap}}">
+                                        <DockPanel  Grid.Row="8" Visibility="{Binding DecAxisVis, Converter={StaticResource BoolToClap}}">
                                             <TextBlock Text="{Binding Source={StaticResource dDecAxis}, StringFormat='{}{0}:'}" HorizontalAlignment="Left" />
                                             <TextBlock Margin="10,0,0,0" Text="{Binding DegY}" Foreground="Red"  HorizontalAlignment="Right"/>
                                         </DockPanel>
-                                        <Button Grid.Row="8" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:Flipper.FlipCommand}" ToolTip="{StaticResource dEdit}" >
-                                            <md:PackIcon Kind="Edit" Height="25" Width="25" />
+                                        <Button Grid.Row="9" Height="27" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:Flipper.FlipCommand}" ToolTip="{StaticResource dEdit}" >
+                                            <md:PackIcon Kind="Edit" Height="20" Width="20" />
                                         </Button>
                                     </Grid>
                                 </Border>
                             </md:Flipper.FrontContent>
                             <md:Flipper.BackContent>
-                                <Border MinWidth="150" MinHeight="150" Margin="3" CornerRadius="5" BorderThickness="3" BorderBrush="DimGray" Opacity=".8" Background="{StaticResource MaterialDesignToolBarBackground}">
+                                <Border MinWidth="150" MinHeight="170" Margin="3" CornerRadius="5" BorderThickness="3" BorderBrush="DimGray" Opacity=".8" Background="{StaticResource MaterialDesignToolBarBackground}">
                                     <Grid Margin="10">
                                         <Grid.RowDefinitions>
+                                            <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
@@ -321,9 +327,10 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                         <CheckBox Grid.Row="5" Content="{StaticResource SideRealTime}" IsChecked="{Binding Path=SideVis}" />
                                         <CheckBox Grid.Row="6" Content="{StaticResource dRaAxis}" IsChecked="{Binding Path=RaAxisVis}" />
                                         <CheckBox Grid.Row="7" Content="{StaticResource dDecAxis}" IsChecked="{Binding Path=DecAxisVis}" />
-                                        <CheckBox Grid.Row="8" Content="{StaticResource topName}" IsChecked="{Binding Path=DescriptionVis}" />
-                                        <CheckBox Grid.Row="9" Content="{StaticResource dCamera}" IsChecked="{Binding Path=CameraVis}" />
-                                        <Button Grid.Row="10" Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static md:Flipper.FlipCommand}" HorizontalAlignment="Left">
+                                        <CheckBox Grid.Row="8" Content="{StaticResource Sop}" IsChecked="{Binding Path=SopVis}" />
+                                        <CheckBox Grid.Row="9" Content="{StaticResource topName}" IsChecked="{Binding Path=DescriptionVis}" />
+                                        <CheckBox Grid.Row="10" Content="{StaticResource dCamera}" IsChecked="{Binding Path=CameraVis}" />
+                                        <Button Grid.Row="11" Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static md:Flipper.FlipCommand}" HorizontalAlignment="Left">
                                             <md:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" Width="30" Height="30" />
                                         </Button>
                                     </Grid>

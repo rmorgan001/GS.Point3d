@@ -48,6 +48,20 @@ namespace GS.Point3D.Helpers
             }
         }
 
+        private static bool _sopVis;
+        public static bool SopVis
+        {
+            get => _sopVis;
+            set
+            {
+                if (_sopVis == value) return;
+                _sopVis = value;
+                Domain.General.Default.SopVis = value;
+                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                OnStaticPropertyChanged();
+            }
+        }
+
         private static bool _lhaVis;
         public static bool LhaVis
         {
@@ -364,6 +378,20 @@ namespace GS.Point3D.Helpers
                 OnStaticPropertyChanged();
             }
         }
+        
+        private static bool _topMost;
+        public static bool TopMost
+        {
+            get => _topMost;
+            set
+            {
+                if (_topMost == value) return;
+                _topMost = value;
+                Domain.General.Default.TopMost = value;
+                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                OnStaticPropertyChanged();
+            }
+        }
 
         private static string _version;
         private static string Version
@@ -474,6 +502,7 @@ namespace GS.Point3D.Helpers
             CameraVis = Domain.General.Default.CameraVis;
             RaAxisVis = Domain.General.Default.RaAxisVis;
             DecAxisVis = Domain.General.Default.DecAxisVis;
+            SopVis = Domain.General.Default.SopVis;
 
             AccentColor = Domain.General.Default.AccentColor;
             AutoConnect = Domain.General.Default.AutoConnect;
@@ -485,6 +514,7 @@ namespace GS.Point3D.Helpers
             PollTime = Domain.General.Default.PollTime;
             PrimaryColor = Domain.General.Default.PrimaryColor;
             TelescopeID = Domain.General.Default.TelescopeID;
+            TopMost = Domain.General.Default.TopMost;
             WindowHeight = Domain.General.Default.WindowHeight;
             WindowWidth = Domain.General.Default.WindowWidth;
             WindowLeft = Domain.General.Default.WindowLeft;

@@ -13,6 +13,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+using ASCOM.DriverAccess;
+using ASCOM.Utilities;
+using GS.Point3D.Classes;
+using GS.Point3D.Controls;
+using GS.Point3D.Helpers;
+using HelixToolkit.Wpf;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,14 +32,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using ASCOM.DriverAccess;
-using ASCOM.Utilities;
-using GS.Point3D.Classes;
-using GS.Point3D.Controls;
-using GS.Point3D.Helpers;
-using HelixToolkit.Wpf;
-using MaterialDesignColors;
-using MaterialDesignThemes.Wpf;
 using Model3D = GS.Point3D.Classes.Model3D;
 using Timer = System.Timers.Timer;
 
@@ -46,7 +46,7 @@ namespace GS.Point3D
         private Timer _timer;
         private readonly object _timerLock = new object();
         private static readonly Util _util = new Util();
-        private DateTime TimerTimeStamp;
+        private DateTime? TimerTimeStamp;
 
         #endregion
 
@@ -72,8 +72,9 @@ namespace GS.Point3D
 
                     Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
                     Title = Application.Current.Resources["titleName"].ToString();
-                    TopMost = false;
-                    IntervalList = new List<double>(Numbers.InclusiveRange(20, 5000, 50));
+                    IntervalList = new List<double>(Numbers.InclusiveRange(20, 5000, 10));
+                    ClearFlipCard();
+                    LoadSpecialSettings();
 
                     // Theme Colors
                     PrimaryColors = (IList<Swatch>)new SwatchesProvider().Swatches;
@@ -85,14 +86,6 @@ namespace GS.Point3D
                     var theme = paletteHelper.GetTheme();
                     theme.SetBaseTheme(GeneralSettings.DarkTheme ? Theme.Dark : Theme.Light);
                     paletteHelper.SetTheme(theme);
-
-                    // Model
-                    LookDirection = GeneralSettings.ModelLookDirection;
-                    UpDirection = GeneralSettings.ModelUpDirection;
-                    Position = GeneralSettings.ModelPosition;
-                    LoadGEM();
-                    Rotate();
-                    ModelType = GeneralSettings.ModelType;
 
                     if(GeneralSettings.AutoConnect){Connect(true);}
 
@@ -160,7 +153,7 @@ namespace GS.Point3D
         {
             try
             {
-                Process.Start(new ProcessStartInfo("https://www.greenswamp.org/point3d"));
+                Process.Start(new ProcessStartInfo("https://www.greenswamp.org/GSpoint3d"));
             }
             catch (Exception ex)
             {
@@ -168,10 +161,58 @@ namespace GS.Point3D
             }
         }
 
+        private void ClearFlipCard()
+        {
+
+            //RightAscension = $"00h 00:00.00";
+            //Declination = $"000° 00:00.00";
+            //Azimuth = $"000° 00:00.00";
+            //Altitude = $"000° 00:00.00";
+            //Lha = $"00:00:00";
+            //DegX = $"0";
+            //DegY = $"0";
+            //SiderealTime = $"00:00:00";
+            //PierSide = SOP.pierUnknown;
+
+            RightAscension = string.Empty;
+            Declination = string.Empty;
+            Azimuth = string.Empty;
+            Altitude = string.Empty;
+            Lha = string.Empty;
+            PierSide = SOP.pierUnknown;
+            DegX = string.Empty;
+            DegY = string.Empty;
+            SiderealTime = string.Empty;
+        }
+
+        private void SaveSpecialSettings()
+        {
+            GeneralSettings.ModelPosition = Position;
+            GeneralSettings.ModelLookDirection = LookDirection;
+            GeneralSettings.ModelUpDirection = UpDirection;
+
+            GeneralSettings.WindowTop = WindowTop;
+            GeneralSettings.WindowHeight = WindowHeight;
+            GeneralSettings.WindowLeft = WindowLeft;
+            GeneralSettings.WindowWidth = WindowWidth;
+        }
+
+        private void LoadSpecialSettings()
+        {
+            LookDirection = GeneralSettings.ModelLookDirection;
+            UpDirection = GeneralSettings.ModelUpDirection;
+            Position = GeneralSettings.ModelPosition;
+
+            WindowTop = GeneralSettings.WindowTop;
+            WindowHeight = GeneralSettings.WindowHeight;
+            WindowLeft = GeneralSettings.WindowLeft;
+            WindowWidth = GeneralSettings.WindowWidth;
+        }
 
         #endregion
 
         #region Viewport3D
+
         private double xAxisOffset;
         private double yAxisOffset;
         private double zAxisOffset;
@@ -308,7 +349,17 @@ namespace GS.Point3D
                 OnPropertyChanged();
             }
         }
-        
+
+        public bool SopVis
+        {
+            get => GeneralSettings.SopVis;
+            set
+            {
+                GeneralSettings.SopVis = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool CameraVis
         {
             get => GeneralSettings.CameraVis;
@@ -432,16 +483,14 @@ namespace GS.Point3D
             }
         }
 
-        private Model3DType _modelType;
         public Model3DType ModelType
         {
-            get => _modelType;
+            get => GeneralSettings.ModelType;
             set
             {
-                if (_modelType == value) return;
-                _modelType = value;
                 GeneralSettings.ModelType = value;
                 LoadGEM();
+                Rotate();
                 OnPropertyChanged();
             }
         }
@@ -748,13 +797,31 @@ namespace GS.Point3D
             }
         }
 
+        public string Sop
+        {
+            get
+            {
+                var a = (Sop) PierSide;
+                return a == Helpers.Sop.None ? string.Empty : a.ToString();
+            }
+        }
+
         private double Ra { get; set; }
 
         private double Dec { get; set; }
 
         public double Latitude { get; set; }
 
-        public SOP PierSide { get; set; }
+        private SOP _pierSide;
+        public SOP PierSide
+        {
+            get => _pierSide;
+            private set
+            {
+                _pierSide = value;
+                OnPropertyChanged($"Sop");
+            }
+        }
 
         public double SideRealtime { get; set; }
 
@@ -786,70 +853,55 @@ namespace GS.Point3D
             }
         }
 
-        private void StartPollTimer()
+        private void StartPolling()
         {
-            try
+            if (IsPollRunning) return;
+            
+            Latitude =_telescope.SiteLatitude; 
+            Description = _telescope.Description;
+            var alignModeResulTryParse = Enum.TryParse(_telescope.AlignmentMode.ToString(), out AlignMode pAlignMode);
+            AlignmentMode = alignModeResulTryParse ? pAlignMode : AlignMode.algUnknown;
+            if (AlignmentMode != AlignMode.algGermanPolar)
             {
-                if (IsPollRunning) return;
-                
-                Latitude =_telescope.SiteLatitude; 
-                Description = _telescope.Description;
-                var alignModeResulTryParse = Enum.TryParse(_telescope.AlignmentMode.ToString(), out AlignMode pAlignMode);
-                AlignmentMode = alignModeResulTryParse ? pAlignMode : AlignMode.algUnknown;
-                if (AlignmentMode != AlignMode.algGermanPolar){throw new Exception($"{Application.Current.Resources["exNoAlignmentMode"]}");}
-
-                ModelOn = true;
-                TimerTimeStamp = DateTime.Now;
-
-                //offset for model to match start position
-                xAxisOffset = 90;
-                yAxisOffset = -90;
-                zAxisOffset = 0;
-
-                //start position
-                //XAxis = -90;
-                //YAxis = 90;
-                ZAxis = Math.Round(Math.Abs(Latitude), 2);
-
-                if (_timer == null)
-                {
-                    _timer = new Timer((int)PollTime) { Enabled = true };
-                    _timer.Elapsed += PollEvent;
-                }
-                
-                IsPollRunning = true;
-
-                var monitorItem = new MonitorEntry
-                {
-                    Datetime = DateTime.Now,
-                    Device = MonitorDevice.Program,
-                    Category = MonitorCategory.Interface,
-                    Type = MonitorType.Information,
-                    Method = MethodBase.GetCurrentMethod().Name,
-                    Thread = Thread.CurrentThread.ManagedThreadId,
-                    Message = $"{Description}"
-                };
-                Helpers.Monitor.LogToMonitor(monitorItem);
-            }
-            catch (Exception e)
-            {
-                var monitorItem = new MonitorEntry
-                {
-                    Datetime = DateTime.Now,
-                    Device = MonitorDevice.Telescope,
-                    Category = MonitorCategory.Interface,
-                    Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
-                    Thread = Thread.CurrentThread.ManagedThreadId,
-                    Message = $"{e.Message},{e.StackTrace?.Trim()}"
-                };
-                Helpers.Monitor.LogToMonitor(monitorItem);
-                OpenDialog(e.Message, $"{Application.Current.Resources["exError"]}"); 
+               throw new Exception($"{Application.Current.Resources["exNoAlignmentMode"]}");
             }
 
+            var monitorItem = new MonitorEntry
+            {
+                Datetime = DateTime.Now,
+                Device = MonitorDevice.Program,
+                Category = MonitorCategory.Interface,
+                Type = MonitorType.Information,
+                Method = MethodBase.GetCurrentMethod().Name,
+                Thread = Thread.CurrentThread.ManagedThreadId,
+                Message = $"{Description},{_util.DegreesToDMS(Latitude, "° ", ":", "", 2)},{AlignmentMode}"
+            };
+            Helpers.Monitor.LogToMonitor(monitorItem);
+
+            ModelOn = true;
+            TimerTimeStamp = DateTime.Now;
+
+            //offset for model to match start position
+            xAxisOffset = 90;
+            yAxisOffset = -90;
+            zAxisOffset = 0;
+
+            //start position
+            //XAxis = -90;
+            //YAxis = 90;
+            ZAxis = Math.Round(Math.Abs(Latitude), 2);
+
+            if (_timer == null)
+            {
+                _timer = new Timer((int)PollTime) { Enabled = true };
+                _timer.Elapsed += PollEvent;
+                //_timer.Elapsed += async (sender, arguments) => await PollEvent(sender, arguments);
+            }
+            
+            IsPollRunning = true;
         }
 
-        private void StopPollTimer()
+        private void StopPolling()
         {
             if (_timer != null)
             {
@@ -861,6 +913,7 @@ namespace GS.Point3D
             Description = null;
             ModelOn = false;
 
+            if (TimerTimeStamp == null){return;}
             var monitorItem = new MonitorEntry
             {
                 Datetime = DateTime.Now,
@@ -872,7 +925,10 @@ namespace GS.Point3D
                 Message = $"{DateTime.Now - TimerTimeStamp}"
             };
             Helpers.Monitor.LogToMonitor(monitorItem);
-            TimerTimeStamp = new DateTime();
+            
+            TimerTimeStamp = null;
+            ClearFlipCard();
+            SaveSpecialSettings();
         }
 
         private void PollEvent(object sender, EventArgs e)
@@ -908,6 +964,7 @@ namespace GS.Point3D
                 if (DecAxisVis){DegY = $"{Math.Round(Axis1, 2)}°";}
                 if (SideVis){SiderealTime = _util.HoursToHMS(SideRealtime);}
                 if (LhaVis){Lha = _util.HoursToHMS(Numbers.Ra2Ha12(Ra, SideRealtime)); }
+
             }
             catch (Exception ex)
             {
@@ -1065,10 +1122,11 @@ namespace GS.Point3D
                 _connected = value;
                 if (value)
                 {
-                    StartPollTimer();}
+                    StartPolling();
+                }
                 else
                 {
-                    StopPollTimer();
+                    StopPolling();
                 }
                 OnPropertyChanged();
             }
@@ -1156,8 +1214,6 @@ namespace GS.Point3D
             }
             catch (Exception e)
             {
-                Connected = false;
-
                 var monitorItem = new MonitorEntry
                 {
                     Datetime = DateTime.Now,
@@ -1169,6 +1225,7 @@ namespace GS.Point3D
                     Message = $"{e.Message},{e.StackTrace?.Trim()}"
                 };
                 Helpers.Monitor.LogToMonitor(monitorItem);
+                Connect(false);
                 OpenDialog(e.Message, $"{Application.Current.Resources["exError"]}");
             }
 
@@ -1234,8 +1291,6 @@ namespace GS.Point3D
                 }
                 _telescope = null;
                 GC.Collect();
-
-
             }
             catch (Exception e)
             {
@@ -1272,58 +1327,60 @@ namespace GS.Point3D
             }
         }
 
-        private bool _topMost;
         public bool TopMost
         {
-            get => _topMost;
+            get => GeneralSettings.TopMost;
             set
             {
-                if (_topMost == value) return;
-                _topMost = value;
+                GeneralSettings.TopMost = value;
                 OnPropertyChanged();
             }
         }
-        
+
+        private double _windowHeight;
         public double WindowHeight
         {
-            get => GeneralSettings.WindowHeight;
+            get => _windowHeight;
             set
             {
-                if (Math.Abs(value - GeneralSettings.WindowHeight) < 10) return;
-                GeneralSettings.WindowHeight = value;
+                if (Math.Abs(value - _windowHeight) < 10) return;
+                _windowHeight = value;
                 OnPropertyChanged();
             }
         }
 
+        private double _windowWidth;
         public double WindowWidth
         {
-            get => GeneralSettings.WindowWidth;
+            get => _windowWidth;
             set
             {
-                if (Math.Abs(value - GeneralSettings.WindowWidth) < 10) return;
-                GeneralSettings.WindowWidth = value;
+                if (Math.Abs(value - _windowWidth) < 10) return;
+                _windowWidth = value;
                 OnPropertyChanged();
             }
         }
 
+        private double _windowLeft;
         public double WindowLeft
         {
-            get => GeneralSettings.WindowLeft;
+            get => _windowLeft;
             set
             {
-                if (Math.Abs(value - GeneralSettings.WindowLeft) < 10) return;
-                GeneralSettings.WindowLeft = value;
+                if (Math.Abs(value - _windowLeft) < 10) return;
+                _windowLeft = value;
                 OnPropertyChanged();
             }
         }
 
+        private double _windowTop;
         public double WindowTop
         {
-            get => GeneralSettings.WindowTop;
+            get => _windowTop;
             set
             {
-                if (Math.Abs(value - GeneralSettings.WindowTop) < 10) return;
-                GeneralSettings.WindowTop = value;
+                if (Math.Abs(value - _windowTop) < 10) return;
+                _windowTop = value;
                 OnPropertyChanged();
             }
         }
@@ -1579,9 +1636,7 @@ namespace GS.Point3D
         // exactly as they are.
         ~MainWindowVM()
         {
-            GeneralSettings.ModelLookDirection = LookDirection;
-            GeneralSettings.ModelUpDirection = UpDirection;
-            GeneralSettings.ModelPosition = Position;
+            SaveSpecialSettings();
             GeneralSettings.Save();
 
             // Finalizer calls Dispose(false)
