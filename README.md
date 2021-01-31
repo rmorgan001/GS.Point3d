@@ -1,4 +1,4 @@
-# GS.Point3d - 3D telescope models that connect to any Windows ASCOM Telescope hub/driver to display its position.
+# GS.Point3d - 3D telescope models that connect to any Windows ASCOM GEM Telescope hub/driver to display its position.
 
 ![Main Workflow](https://github.com/rmorgan001/GS.Point3D/workflows/Main%20Workflow/badge.svg)
 [![Windows](https://img.shields.io/github/v/release/rmorgan001/GS.Point3D)](https://github.com/rmorgan001/GS.Point3D/releases)
