@@ -34,6 +34,10 @@ namespace GS.Point3D.Helpers
         pierWest = 1
     }
 
+
+    /// <summary>
+    /// Side of Pier
+    /// </summary>
     public enum Sop
     {
         None = -1,

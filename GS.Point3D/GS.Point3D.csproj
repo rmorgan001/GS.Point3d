@@ -60,6 +60,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>General.Designer.cs</LastGenOutput>
     </None>
+    <None Update="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Models\CompassN.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
