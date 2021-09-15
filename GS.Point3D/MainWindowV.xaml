@@ -187,7 +187,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                             </StackPanel>
                             <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" >
                                 <Label Margin="10,0,0,10" Content="{StaticResource Offsets}" VerticalAlignment="Bottom"/>
-                                <ComboBox Margin="20,0,0,0" md:HintAssist.Hint="RA" MinWidth="50" IsEditable="False" ItemsSource="{Binding YAxisOffsetList}" ToolTip="Ra" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox Margin="20,0,0,0" md:HintAssist.Hint="RA"  MinWidth="50" IsEditable="False" ItemsSource="{Binding YAxisOffsetList}" ToolTip="Ra" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                     <ComboBox.Text>
                                         <Binding Path="YOffset" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
