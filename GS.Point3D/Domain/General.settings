@@ -42,7 +42,7 @@
       <Value Profile="(Default)">grey</Value>
     </Setting>
     <Setting Name="PollTime" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="ModelLookDirection" Type="System.String" Scope="User">
       <Value Profile="(Default)">-2616, -3167, -1170</Value>
@@ -97,6 +97,15 @@
     </Setting>
     <Setting Name="TopMost" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="xAxisOffset" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="yAxisOffset" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-90</Value>
+    </Setting>
+    <Setting Name="zAxisOffset" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

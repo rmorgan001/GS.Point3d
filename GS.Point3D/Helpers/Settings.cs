@@ -277,7 +277,7 @@ namespace GS.Point3D.Helpers
         public static bool Log
         {
             get => _log;
-            set
+            private set
             {
                 if (_log == value) return;
                 _log = value;
@@ -475,6 +475,48 @@ namespace GS.Point3D.Helpers
                 OnStaticPropertyChanged();
             }
         }
+
+        private static double _xOffset;
+        public static double XOffset
+        {
+            get => _xOffset;
+            set
+            {
+                if (Math.Abs(_xOffset - value) < 0.1) return;
+                _xOffset = value;
+                Domain.General.Default.xAxisOffset = value;
+                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                OnStaticPropertyChanged();
+            }
+        }
+
+        private static double _yOffset;
+        public static double YOffset
+        {
+            get => _yOffset;
+            set
+            {
+                if (Math.Abs(_yOffset - value) < 0.1) return;
+                _yOffset = value;
+                Domain.General.Default.yAxisOffset = value;
+                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                OnStaticPropertyChanged();
+            }
+        }
+
+        private static double _zOffset;
+        public static double ZOffset
+        {
+            get => _zOffset;
+            set
+            {
+                if (Math.Abs(_zOffset - value) < 0.1) return;
+                _zOffset = value;
+                Domain.General.Default.zAxisOffset = value;
+                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                OnStaticPropertyChanged();
+            }
+        }
         
         #endregion
 
@@ -503,6 +545,10 @@ namespace GS.Point3D.Helpers
             RaAxisVis = Domain.General.Default.RaAxisVis;
             DecAxisVis = Domain.General.Default.DecAxisVis;
             SopVis = Domain.General.Default.SopVis;
+
+            XOffset = Domain.General.Default.xAxisOffset;
+            YOffset = Domain.General.Default.yAxisOffset;
+            ZOffset = Domain.General.Default.zAxisOffset;
 
             AccentColor = Domain.General.Default.AccentColor;
             AutoConnect = Domain.General.Default.AutoConnect;

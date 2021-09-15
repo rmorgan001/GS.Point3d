@@ -12,7 +12,7 @@ namespace GS.Point3D.Domain {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class General : global::System.Configuration.ApplicationSettingsBase {
         
         private static General defaultInstance = ((General)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new General())));
@@ -181,7 +181,7 @@ namespace GS.Point3D.Domain {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public double PollTime {
             get {
                 return ((double)(this["PollTime"]));
@@ -404,6 +404,42 @@ namespace GS.Point3D.Domain {
             }
             set {
                 this["TopMost"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public double xAxisOffset {
+            get {
+                return ((double)(this["xAxisOffset"]));
+            }
+            set {
+                this["xAxisOffset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-90")]
+        public double yAxisOffset {
+            get {
+                return ((double)(this["yAxisOffset"]));
+            }
+            set {
+                this["yAxisOffset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double zAxisOffset {
+            get {
+                return ((double)(this["zAxisOffset"]));
+            }
+            set {
+                this["zAxisOffset"] = value;
             }
         }
     }

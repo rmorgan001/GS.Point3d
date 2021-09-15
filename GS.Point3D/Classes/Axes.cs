@@ -24,7 +24,7 @@ namespace GS.Point3D.Classes
 
         static Axes()
         {
-            if (_mainWindowVM == null) _mainWindowVM = MainWindowVM._mainWindowVM;
+             _mainWindowVM = MainWindowVM._mainWindowVM;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace GS.Point3D.Classes
                     return axes;
                 case AlignMode.algGermanPolar:
                     axes[0] = (_mainWindowVM.SideRealtime - axes[0]) * 15.0;
-                    if (_mainWindowVM.SouthernHemisphere) axes[1] = -axes[1];
+                    if (_mainWindowVM.SouthernHemisphere){axes[1] = -axes[1];}
 
                     _mainWindowVM.Axis2 = axes[0];
                     _mainWindowVM.Axis3 = axes[1];

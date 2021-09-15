@@ -80,4 +80,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
     <!--v1.0.1 -->
     <system:String x:Key="Sop">Côté du pied</system:String>
 
+    <!--v1.0.2 -->
+    <system:String x:Key="Offsets">Décalages</system:String>
+
 </ResourceDictionary>

@@ -32,6 +32,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using ASCOM.DeviceInterface;
 using Model3D = GS.Point3D.Classes.Model3D;
 using Timer = System.Timers.Timer;
 
@@ -73,6 +74,12 @@ namespace GS.Point3D
                     Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
                     Title = Application.Current.Resources["titleName"].ToString();
                     IntervalList = new List<double>(Numbers.InclusiveRange(20, 5000, 10));
+
+                    //offsets
+                    XAxisOffsetList = new List<double>(Numbers.InclusiveRange(-90, 90, 1));
+                    YAxisOffsetList = new List<double>(Numbers.InclusiveRange(-90, 90, 1));
+                    //ZAxisOffsetList = new List<double>(Numbers.InclusiveRange(0, 90, 1));
+
                     ClearFlipCard();
                     LoadSpecialSettings();
 
@@ -212,10 +219,42 @@ namespace GS.Point3D
         #endregion
 
         #region Viewport3D
+        
+        public IList<double> XAxisOffsetList { get; }
 
-        private double xAxisOffset;
-        private double yAxisOffset;
-        private double zAxisOffset;
+        public double XOffset
+        {
+            get => GeneralSettings.XOffset;
+            set
+            {
+                GeneralSettings.XOffset = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IList<double> YAxisOffsetList { get; }
+
+        public double YOffset
+        {
+            get => GeneralSettings.YOffset;
+            set
+            {
+                GeneralSettings.YOffset = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //public IList<double> ZAxisOffsetList { get; }
+
+        public double ZOffset
+        {
+            get => GeneralSettings.ZOffset;
+            set
+            {
+                GeneralSettings.ZOffset = value;
+                OnPropertyChanged();
+            }
+        }
 
         private bool _modelOn;
         public bool ModelOn
@@ -421,7 +460,7 @@ namespace GS.Point3D
             set
             {
                 _xAxis = value;
-                XAxisOffset = value + xAxisOffset;
+                XAxisOffset = value + XOffset;
                 OnPropertyChanged();
             }
         }
@@ -433,7 +472,7 @@ namespace GS.Point3D
             set
             {
                 _yAxis = value;
-                YAxisOffset = value + yAxisOffset;
+                YAxisOffset = value + YOffset;
                 OnPropertyChanged();
             }
         }
@@ -445,7 +484,7 @@ namespace GS.Point3D
             set
             {
                 _zAxis = value;
-                ZAxisOffset = zAxisOffset - value;
+                ZAxisOffset = ZOffset - value;
                 OnPropertyChanged();
             }
         }
@@ -517,14 +556,6 @@ namespace GS.Point3D
                 UpDirection = GeneralSettings.ModelUpDirection;
                 Position = GeneralSettings.ModelPosition;
 
-                //offset for model to match start position
-                //xAxisOffset = 90;
-                //yAxisOffset = -90;
-                //zAxisOffset = 0;
-
-                //start position
-                //XAxis = -90;
-                //YAxis = 90;
                 ZAxis = Math.Round(Math.Abs(Latitude), 2);
 
                 //load model and compass
@@ -622,6 +653,8 @@ namespace GS.Point3D
         #endregion
 
         #region Polling
+
+        private bool LogFirstPoll { get; set; }
         
         private string _altitude;
         public string Altitude
@@ -812,6 +845,8 @@ namespace GS.Point3D
 
         public double Latitude { get; set; }
 
+        private double Longitude { get; set; }
+
         private SOP _pierSide;
         public SOP PierSide
         {
@@ -819,16 +854,14 @@ namespace GS.Point3D
             private set
             {
                 _pierSide = value;
+                // ReSharper disable once ExplicitCallerInfoArgument
                 OnPropertyChanged($"Sop");
             }
         }
 
         public double SideRealtime { get; set; }
 
-        public bool SouthernHemisphere
-        {
-            get => Latitude < 0;
-        }
+        public bool SouthernHemisphere => Latitude < 0;
 
         public IList<double> IntervalList { get; }
 
@@ -856,8 +889,11 @@ namespace GS.Point3D
         private void StartPolling()
         {
             if (IsPollRunning) return;
-            
-            Latitude =_telescope.SiteLatitude; 
+
+            LogFirstPoll = false;
+
+            Latitude =_telescope.SiteLatitude;
+            Longitude = _telescope.SiteLongitude;
             Description = _telescope.Description;
             var alignModeResulTryParse = Enum.TryParse(_telescope.AlignmentMode.ToString(), out AlignMode pAlignMode);
             AlignmentMode = alignModeResulTryParse ? pAlignMode : AlignMode.algUnknown;
@@ -874,28 +910,18 @@ namespace GS.Point3D
                 Type = MonitorType.Information,
                 Method = MethodBase.GetCurrentMethod().Name,
                 Thread = Thread.CurrentThread.ManagedThreadId,
-                Message = $"{Description},{_util.DegreesToDMS(Latitude, "° ", ":", "", 2)},{AlignmentMode}"
+                Message = $"{Description}, {Latitude}, {Longitude}, {AlignmentMode}"
             };
             Helpers.Monitor.LogToMonitor(monitorItem);
 
             ModelOn = true;
             TimerTimeStamp = DateTime.Now;
-
-            //offset for model to match start position
-            xAxisOffset = 90;
-            yAxisOffset = -90;
-            zAxisOffset = 0;
-
-            //start position
-            //XAxis = -90;
-            //YAxis = 90;
             ZAxis = Math.Round(Math.Abs(Latitude), 2);
 
             if (_timer == null)
             {
                 _timer = new Timer((int)PollTime) { Enabled = true };
                 _timer.Elapsed += PollEvent;
-                //_timer.Elapsed += async (sender, arguments) => await PollEvent(sender, arguments);
             }
             
             IsPollRunning = true;
@@ -955,15 +981,44 @@ namespace GS.Point3D
                 Rotate();
 
                 // get other info
-                if (!FlipCardVis){return;}
-                if (AltVis){ Altitude = _util.DegreesToDMS(_telescope.Altitude, "° ", ":", "", 2);}
-                if (AzVis){Azimuth = _util.DegreesToDMS(_telescope.Azimuth, "° ", ":", "", 2);}
-                if (DecVis){Declination = _util.DegreesToDMS(Dec, "° ", ":", "", 2);}
-                if (RaVis){RightAscension = _util.HoursToHMS(Ra, "h ", ":", "", 2);}
-                if (RaAxisVis){DegX = $"{Math.Round(Axis0, 2)}°";}
-                if (DecAxisVis){DegY = $"{Math.Round(Axis1, 2)}°";}
-                if (SideVis){SiderealTime = _util.HoursToHMS(SideRealtime);}
-                if (LhaVis){Lha = _util.HoursToHMS(Numbers.Ra2Ha12(Ra, SideRealtime)); }
+                if (FlipCardVis)
+                {
+                    if (AltVis){Altitude = _util.DegreesToDMS(_telescope.Altitude, "° ", ":", "", 2);}
+                    if (AzVis){Azimuth = _util.DegreesToDMS(_telescope.Azimuth, "° ", ":", "", 2);}
+                    if (DecVis){Declination = _util.DegreesToDMS(Dec, "° ", ":", "", 2);}
+                    if (RaVis){RightAscension = _util.HoursToHMS(Ra, "h ", ":", "", 2);}
+                    if (RaAxisVis){DegX = $"{Math.Round(Axis0, 2)}°";}
+                    if (DecAxisVis){DegY = $"{Math.Round(Axis1, 2)}°";}
+                    if (SideVis){SiderealTime = _util.HoursToHMS(SideRealtime);}
+                    if (LhaVis){Lha = _util.HoursToHMS(Numbers.Ra2Ha12(Ra, SideRealtime));}
+                }
+
+                if (LogFirstPoll){return;}
+                
+                var msg = $"Latitude={_util.DegreesToDMS(_telescope.SiteLatitude, "° ", ":", "", 2)}, ";
+                msg += $"Longitude={_util.DegreesToDMS(_telescope.SiteLongitude, "° ", ":", "", 2)}, ";
+                msg += $"Altitude={_util.DegreesToDMS(_telescope.Altitude, "° ", ":", "", 2)}, ";
+                msg += $"Azimuth = {_util.DegreesToDMS(_telescope.Azimuth, "° ", ":", "", 2)}, ";
+                msg += $"Declination = {_util.DegreesToDMS(Dec, "° ", ":", "", 2)}, ";
+                msg += $"RightAscension = {_util.HoursToHMS(Ra, "h ", ":", "", 2)}, ";
+                msg += $"RightAscension = {_util.HoursToHMS(Ra, "h ", ":", "", 2)}, ";
+                msg += $"DegX = {Math.Round(Axis0, 2)}°, ";
+                msg += $"DegY = {Math.Round(Axis1, 2)}°, ";
+                msg += $"SiderealTime = {_util.HoursToHMS(SideRealtime)}, ";
+                msg += $"LHA = {_util.HoursToHMS(Numbers.Ra2Ha12(Ra, SideRealtime))}";
+
+                var monitorItem = new MonitorEntry
+                {
+                    Datetime = DateTime.Now,
+                    Device = MonitorDevice.Telescope,
+                    Category = MonitorCategory.Interface,
+                    Type = MonitorType.Error,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    Thread = Thread.CurrentThread.ManagedThreadId,
+                    Message = msg
+                };
+                Helpers.Monitor.LogToMonitor(monitorItem);
+                LogFirstPoll = true;
 
             }
             catch (Exception ex)
@@ -1674,6 +1729,55 @@ namespace GS.Point3D
             //    nativeResource = IntPtr.Zero;
             //}
         }
+        #endregion
+
+        #region Test
+
+        private ICommand _clickTestCmd;
+        public ICommand ClickTestCmd
+        {
+            get
+            {
+                var command = _clickTestCmd;
+                if (command != null)
+                {
+                    return command;
+                }
+
+                return _clickTestCmd = new RelayCmd(
+                    param => ClickTest()
+                );
+            }
+        }
+        private void ClickTest()
+        {
+            try
+            {
+                using (new WaitCursor())
+                {
+                 //   _telescope.MoveAxis(TelescopeAxes.axisPrimary, 1);
+                    _telescope.MoveAxis(TelescopeAxes.axisPrimary, 0);
+                }
+            }
+            catch (Exception e)
+            {
+                var monitorItem = new MonitorEntry
+                {
+                    Datetime = DateTime.Now,
+                    Device = MonitorDevice.Telescope,
+                    Category = MonitorCategory.Interface,
+                    Type = MonitorType.Error,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    Thread = Thread.CurrentThread.ManagedThreadId,
+                    Message = $"{e.Message},{e.StackTrace?.Trim()}"
+                };
+                Helpers.Monitor.LogToMonitor(monitorItem);
+                Connect(false);
+                OpenDialog(e.Message, $"{Application.Current.Resources["exError"]}");
+            }
+
+        }
+
         #endregion
     }
 }

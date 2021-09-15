@@ -56,13 +56,14 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                         <Grid Width="450" ShowGridLines="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="50" />
                                 <RowDefinition Height="60" />
                                 <RowDefinition Height="60" />
                                 <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
+                                <RowDefinition Height="50" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" Grid.Column="0">
@@ -157,7 +158,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="4" Orientation="Horizontal">
-                            <ComboBox  md:HintAssist.Hint="{StaticResource dModelType}" MinWidth="150" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  ToolTip="{StaticResource dModelType}" ItemsSource="{Binding Source={domain:EnumBindingSource {x:Type helpers:Model3DType}}}" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox  md:HintAssist.Hint="{StaticResource dModelType}" MinWidth="150" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  ToolTip="{StaticResource dModelType}" ItemsSource="{Binding Source={domain:EnumBindingSource {x:Type helpers:Model3DType}}}" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBox.Text>
                                     <Binding Path="ModelType" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
                                 </ComboBox.Text>
@@ -184,6 +185,55 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 </md:ToggleButtonAssist.OnContent>
                             </ToggleButton>
                             </StackPanel>
+                            <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" >
+                                <Label Margin="10,0,0,10" Content="{StaticResource Offsets}" VerticalAlignment="Bottom"/>
+                                <ComboBox Margin="20,0,0,0" md:HintAssist.Hint="RA" MinWidth="50" IsEditable="False" ItemsSource="{Binding YAxisOffsetList}" ToolTip="Ra" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <ComboBox.Text>
+                                        <Binding Path="YOffset" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <cvt:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                                <cvt:IntValidationRule ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                                <ComboBox Margin="20,0,0,0" md:HintAssist.Hint="Dec" MinWidth="50" IsEditable="False" ItemsSource="{Binding XAxisOffsetList}" ToolTip="Dec" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <ComboBox.Text>
+                                        <Binding Path="XOffset" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <cvt:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                                <cvt:IntValidationRule ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                                <!--<ComboBox Margin="20,0,0,0" md:HintAssist.Hint="Z" MinWidth="50" IsEditable="False" ItemsSource="{Binding ZAxisOffsetList}" ToolTip="X" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <ComboBox.Text>
+                                        <Binding Path="zAxisOffset" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <cvt:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                                <cvt:IntValidationRule ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>-->
+                            </StackPanel>
+
                             <!-- axes 0 and 1 are the used positions, uncomment to show in settings-->
                             <!-- <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
                                 <Label Margin="10,0,0,0" VerticalAlignment="Bottom" Content="Axis0:" />
@@ -205,9 +255,12 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 <Label Margin="10,0,0,0" Width="200" VerticalAlignment="Bottom" Content="{Binding Axis5}" />
                             </StackPanel>-->
 
-                            <TextBlock Grid.Row="5" FontSize="16" Margin="15">
+                            <TextBlock Grid.Row="6" FontSize="16" Margin="15">
                                 <Span xml:space="preserve"><Hyperlink Command="{Binding ClickDonateCmd}">Click to Donate</Hyperlink></Span>
                             </TextBlock>
+
+                            <Button Grid.Row="7" ToolTip="Test" Content="Test" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding ClickTestCmd}"/>
+
                         </Grid>
                     </md:DrawerHost.LeftDrawerContent>
                     <Grid>
