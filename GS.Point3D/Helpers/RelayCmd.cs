@@ -90,7 +90,7 @@ namespace GS.Point3D.Helpers
             if (str.Contains("<get_")) str = Strings.GetTxtBetween(str, "<get_", ">");
 
             var monitorItem = new MonitorEntry
-            { Datetime = DateTime.Now, Device = MonitorDevice.Program, Category = MonitorCategory.Interface, Type = MonitorType.Information, Method = MethodBase.GetCurrentMethod().Name, Thread = Thread.CurrentThread.ManagedThreadId, Message = $"{str}" };
+            { Datetime = DateTime.Now, Device = MonitorDevice.Program, Category = MonitorCategory.Interface, Type = MonitorType.Information, Method = MethodBase.GetCurrentMethod()?.Name, Thread = Thread.CurrentThread.ManagedThreadId, Message = $"{str}" };
             Monitor.LogToMonitor(monitorItem);
 
             _execute(parameter);

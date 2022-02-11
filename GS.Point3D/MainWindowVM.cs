@@ -65,7 +65,7 @@ namespace GS.Point3D
                         Device = MonitorDevice.Program,
                         Category = MonitorCategory.Interface,
                         Type = MonitorType.Information,
-                        Method = MethodBase.GetCurrentMethod().Name,
+                        Method = MethodBase.GetCurrentMethod()?.Name,
                         Thread = Thread.CurrentThread.ManagedThreadId,
                         Message = $"Starting"
                     };
@@ -114,7 +114,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{e.Message},{e.StackTrace?.Trim()}"
                 };
@@ -595,7 +595,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{ex.Message},{ex.StackTrace}"
                 };
@@ -641,7 +641,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{ex.Message},{ex.StackTrace}"
                 };
@@ -908,7 +908,7 @@ namespace GS.Point3D
                 Device = MonitorDevice.Program,
                 Category = MonitorCategory.Interface,
                 Type = MonitorType.Information,
-                Method = MethodBase.GetCurrentMethod().Name,
+                Method = MethodBase.GetCurrentMethod()?.Name,
                 Thread = Thread.CurrentThread.ManagedThreadId,
                 Message = $"{Description}, {Latitude}, {Longitude}, {AlignmentMode}"
             };
@@ -946,7 +946,7 @@ namespace GS.Point3D
                 Device = MonitorDevice.Program,
                 Category = MonitorCategory.Interface,
                 Type = MonitorType.Information,
-                Method = MethodBase.GetCurrentMethod().Name,
+                Method = MethodBase.GetCurrentMethod()?.Name,
                 Thread = Thread.CurrentThread.ManagedThreadId,
                 Message = $"{DateTime.Now - TimerTimeStamp}"
             };
@@ -1013,7 +1013,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = msg
                 };
@@ -1030,7 +1030,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{ex.Message},{ex.StackTrace?.Trim()}"
                 };
@@ -1134,7 +1134,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{e.Message}"
                 };
@@ -1233,7 +1233,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{e.Message},{e.StackTrace?.Trim()}"
                 };
@@ -1275,7 +1275,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{e.Message},{e.StackTrace?.Trim()}"
                 };
@@ -1302,7 +1302,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Program,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Information,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{con},{TelescopeID}"
                 };
@@ -1598,7 +1598,7 @@ namespace GS.Point3D
                 Device = MonitorDevice.Program,
                 Category = MonitorCategory.Interface,
                 Type = MonitorType.Information,
-                Method = MethodBase.GetCurrentMethod().Name,
+                Method = MethodBase.GetCurrentMethod()?.Name,
                 Thread = Thread.CurrentThread.ManagedThreadId,
                 Message = $"{msg}"
             };
@@ -1767,7 +1767,7 @@ namespace GS.Point3D
                     Device = MonitorDevice.Telescope,
                     Category = MonitorCategory.Interface,
                     Type = MonitorType.Error,
-                    Method = MethodBase.GetCurrentMethod().Name,
+                    Method = MethodBase.GetCurrentMethod()?.Name,
                     Thread = Thread.CurrentThread.ManagedThreadId,
                     Message = $"{e.Message},{e.StackTrace?.Trim()}"
                 };

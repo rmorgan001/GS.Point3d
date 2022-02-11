@@ -43,7 +43,7 @@ namespace GS.Point3D.Helpers
                 if (_firstRun == value) return;
                 _firstRun = value;
                 Domain.General.Default.FirstRun = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -57,7 +57,7 @@ namespace GS.Point3D.Helpers
                 if (_sopVis == value) return;
                 _sopVis = value;
                 Domain.General.Default.SopVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -71,7 +71,7 @@ namespace GS.Point3D.Helpers
                 if (_lhaVis == value) return;
                 _lhaVis = value;
                 Domain.General.Default.LhaVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -85,7 +85,7 @@ namespace GS.Point3D.Helpers
                 if (_descriptionVis == value) return;
                 _descriptionVis = value;
                 Domain.General.Default.DescriptionVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -99,7 +99,7 @@ namespace GS.Point3D.Helpers
                 if (_flipCardVis == value) return;
                 _flipCardVis = value;
                 Domain.General.Default.FlipCardVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -113,7 +113,7 @@ namespace GS.Point3D.Helpers
                 if (_raVis == value) return;
                 _raVis = value;
                 Domain.General.Default.RaVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -127,7 +127,7 @@ namespace GS.Point3D.Helpers
                 if (_decVis == value) return;
                 _decVis = value;
                 Domain.General.Default.DecVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -141,7 +141,7 @@ namespace GS.Point3D.Helpers
                 if (_azVis == value) return;
                 _azVis = value;
                 Domain.General.Default.AzVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -155,7 +155,7 @@ namespace GS.Point3D.Helpers
                 if (_altVis == value) return;
                 _altVis = value;
                 Domain.General.Default.AltVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -169,7 +169,7 @@ namespace GS.Point3D.Helpers
                 if (_sideVis == value) return;
                 _sideVis = value;
                 Domain.General.Default.SideVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -183,7 +183,7 @@ namespace GS.Point3D.Helpers
                 if (_cameraVis == value) return;
                 _cameraVis = value;
                 Domain.General.Default.CameraVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -197,7 +197,7 @@ namespace GS.Point3D.Helpers
                 if (_raAxisVis == value) return;
                 _raAxisVis = value;
                 Domain.General.Default.RaAxisVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -211,7 +211,7 @@ namespace GS.Point3D.Helpers
                 if (_decAxisVis == value) return;
                 _decAxisVis = value;
                 Domain.General.Default.DecAxisVis = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -226,7 +226,7 @@ namespace GS.Point3D.Helpers
                 if (_accentColor == value) return;
                 _accentColor = value;
                 Domain.General.Default.AccentColor = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -240,7 +240,7 @@ namespace GS.Point3D.Helpers
                 if (_autoConnect == value) return;
                 _autoConnect = value;
                 Domain.General.Default.AutoConnect = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -254,7 +254,7 @@ namespace GS.Point3D.Helpers
                 if (_darkTheme == value) return;
                 _darkTheme = value;
                 Domain.General.Default.DarkTheme = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -268,7 +268,7 @@ namespace GS.Point3D.Helpers
                 if (_language == value) return;
                 _language = value;
                 Domain.General.Default.Language = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -282,7 +282,7 @@ namespace GS.Point3D.Helpers
                 if (_log == value) return;
                 _log = value;
                 Domain.General.Default.Log = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -296,7 +296,7 @@ namespace GS.Point3D.Helpers
                 if (_modelType == value) return;
                 _modelType = value;
                 Domain.General.Default.ModelType = value.ToString();
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -309,7 +309,7 @@ namespace GS.Point3D.Helpers
             {
                 _modelLookDirection = value;
                 Domain.General.Default.ModelLookDirection = value.ToString(CultureInfo.InvariantCulture);
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
             }
         }
 
@@ -321,7 +321,7 @@ namespace GS.Point3D.Helpers
             {
                 _modelPosition = value;
                 Domain.General.Default.ModelPosition = value.ToString(CultureInfo.InvariantCulture);
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
             }
         }
 
@@ -333,7 +333,7 @@ namespace GS.Point3D.Helpers
             {
                 _modelUpDirection = value;
                 Domain.General.Default.ModelUpDirection = value.ToString(CultureInfo.InvariantCulture);
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
             }
         }
 
@@ -346,7 +346,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_pollTime - value) < .000001) return;
                 _pollTime = value;
                 Domain.General.Default.PollTime = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -360,7 +360,7 @@ namespace GS.Point3D.Helpers
                 if (_primaryColor == value) return;
                 _primaryColor = value;
                 Domain.General.Default.PrimaryColor = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -374,7 +374,7 @@ namespace GS.Point3D.Helpers
                 if (_telescopeID == value) return;
                 _telescopeID = value;
                 Domain.General.Default.TelescopeID = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -388,7 +388,7 @@ namespace GS.Point3D.Helpers
                 if (_topMost == value) return;
                 _topMost = value;
                 Domain.General.Default.TopMost = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -402,7 +402,7 @@ namespace GS.Point3D.Helpers
                 if (_version == value) return;
                 _version = value;
                 Domain.General.Default.Version = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -415,7 +415,7 @@ namespace GS.Point3D.Helpers
             {
                 _windowState = value;
                 Domain.General.Default.WindowState = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, value.ToString());
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, value.ToString());
                 OnStaticPropertyChanged();
             }
         }
@@ -429,7 +429,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_windowHeight - value) < 0.1) return;
                 _windowHeight = value;
                 Domain.General.Default.WindowHeight = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -443,7 +443,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_windowWidth - value) < 0.1) return;
                 _windowWidth = value;
                 Domain.General.Default.WindowWidth = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -457,7 +457,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_windowLeft - value) < 0.1) return;
                 _windowLeft = value;
                 Domain.General.Default.WindowLeft = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -471,7 +471,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_windowTop - value) < 0.1) return;
                 _windowTop = value;
                 Domain.General.Default.WindowTop = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -485,7 +485,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_xOffset - value) < 0.1) return;
                 _xOffset = value;
                 Domain.General.Default.xAxisOffset = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -499,7 +499,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_yOffset - value) < 0.1) return;
                 _yOffset = value;
                 Domain.General.Default.yAxisOffset = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }
@@ -513,7 +513,7 @@ namespace GS.Point3D.Helpers
                 if (Math.Abs(_zOffset - value) < 0.1) return;
                 _zOffset = value;
                 Domain.General.Default.zAxisOffset = value;
-                LogSetting(MethodBase.GetCurrentMethod().Name, $"{value}");
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
             }
         }

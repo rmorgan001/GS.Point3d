@@ -259,7 +259,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 <Span xml:space="preserve"><Hyperlink Command="{Binding ClickDonateCmd}">Click to Donate</Hyperlink></Span>
                             </TextBlock>
 
-                            <Button Grid.Row="7" ToolTip="Test" Content="Test" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding ClickTestCmd}"/>
+                            <Button Grid.Row="7" ToolTip="Test" Content="Test" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding ClickTestCmd}" Visibility="Collapsed"/>
 
                         </Grid>
                     </md:DrawerHost.LeftDrawerContent>
