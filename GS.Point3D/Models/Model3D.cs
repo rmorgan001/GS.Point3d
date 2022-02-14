@@ -21,7 +21,7 @@ namespace GS.Point3D.Classes
 {
     public static class Model3D
     {
-        private static readonly string _directoryPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\Models\\";
+        private static readonly string _directoryPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\3DModels\\";
         public static string GetModelFile(Model3DType modelType)
         {
             string gpModel;

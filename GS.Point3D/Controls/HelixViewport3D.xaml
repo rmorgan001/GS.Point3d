@@ -20,7 +20,8 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                  xmlns:point3D="clr-namespace:GS.Point3D" 
                  xmlns:wpf="http://helix-toolkit.org/wpf"
-                 mc:Ignorable="d" d:DataContext="{d:DesignInstance point3D:MainWindowVM}" d:DesignHeight="450" d:DesignWidth="800">
+                 xmlns:viewModels="clr-namespace:GS.Point3D.ViewModels"
+                 mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainWindowVM}" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <wpf:HelixViewport3D ShowCameraInfo="{Binding CameraVis}" Background="Transparent" ShowViewCube="False" ViewCubeVerticalPosition="Top" ShowCameraTarget="False" FontStyle="Normal" Title="{Binding Name}" 
                              TitleBackground="DarkGray"  TitleSize="12" TitleFontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">

@@ -31,10 +31,11 @@
     <PackageReference Include="HelixToolkit.Wpf" Version="2.20.2" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="3DModels\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,28 +64,28 @@
     <None Update="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\CompassN.png">
+    <None Update="3DModels\CompassN.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\CompassS.png">
+    <None Update="3DModels\CompassS.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\Default.obj">
+    <None Update="3DModels\Default.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\Reflector.obj">
+    <None Update="3DModels\Reflector.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\Refractor.obj">
+    <None Update="3DModels\Refractor.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\RitcheyChretien.obj">
+    <None Update="3DModels\RitcheyChretien.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\RitcheyChretienTruss.obj">
+    <None Update="3DModels\RitcheyChretienTruss.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Models\SchmidtCassegrain.obj">
+    <None Update="3DModels\SchmidtCassegrain.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -13,14 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-using ASCOM.DriverAccess;
-using ASCOM.Utilities;
-using GS.Point3D.Classes;
-using GS.Point3D.Controls;
-using GS.Point3D.Helpers;
-using HelixToolkit.Wpf;
-using MaterialDesignColors;
-using MaterialDesignThemes.Wpf;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,14 +22,24 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using ASCOM.DeviceInterface;
+using ASCOM.DriverAccess;
+using ASCOM.Utilities;
+using GS.Point3D.Classes;
+using GS.Point3D.Controls;
+using GS.Point3D.Helpers;
+using GS.Point3D.Settings;
+using GS.Point3D.Views;
+using HelixToolkit.Wpf;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using Model3D = GS.Point3D.Classes.Model3D;
 using Timer = System.Timers.Timer;
 
-namespace GS.Point3D
+namespace GS.Point3D.ViewModels
 {
     public sealed class MainWindowVM : ObservableObject, IDisposable
     {
@@ -59,6 +62,7 @@ namespace GS.Point3D
                 {
                     _mainWindowVM = this;
                     GeneralSettings.Load();
+
                     var monitorItem = new MonitorEntry
                     {
                         Datetime = DateTime.Now,
@@ -71,6 +75,7 @@ namespace GS.Point3D
                     };
                     Helpers.Monitor.LogToMonitor(monitorItem);
 
+                    
                     Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
                     Title = Application.Current.Resources["titleName"].ToString();
                     IntervalList = new List<double>(Numbers.InclusiveRange(20, 5000, 10));
@@ -82,6 +87,10 @@ namespace GS.Point3D
 
                     ClearFlipCard();
                     LoadSpecialSettings();
+
+#if DEBUG
+                    TestVis = true;
+#endif
 
                     // Theme Colors
                     PrimaryColors = (IList<Swatch>)new SwatchesProvider().Swatches;
@@ -104,6 +113,8 @@ namespace GS.Point3D
                     msg += $"{Application.Current.Resources["FirstMsg4"]}" + Environment.NewLine;
                     OpenDialog(msg);
                     GeneralSettings.FirstRun = false;
+
+
                 }
             }
             catch (Exception e)
@@ -138,21 +149,14 @@ namespace GS.Point3D
             }
         }
 
-        private ICommand _clickDonateCmd;
-
-        public ICommand ClickDonateCmd
+        private RelayCommand _clickDonateCmd;
+        public RelayCommand ClickDonateCmd
         {
             get
             {
                 var cmd = _clickDonateCmd;
-                if (cmd != null)
-                {
-                    return cmd;
-                }
-
-                return _clickDonateCmd = new RelayCmd(
-                    param => ClickDonate()
-                );
+                if (cmd != null) { return cmd; }
+                return (_clickDonateCmd = new RelayCommand(ClickDonate));
             }
         }
 
@@ -160,7 +164,8 @@ namespace GS.Point3D
         {
             try
             {
-                Process.Start(new ProcessStartInfo("https://www.greenswamp.org/GSpoint3d"));
+                LogCmd(MethodBase.GetCurrentMethod()?.Name);
+                Process.Start(new ProcessStartInfo("https://sites.google.com/view/greenswamp/donations?authuser=0"));
             }
             catch (Exception ex)
             {
@@ -170,17 +175,6 @@ namespace GS.Point3D
 
         private void ClearFlipCard()
         {
-
-            //RightAscension = $"00h 00:00.00";
-            //Declination = $"000° 00:00.00";
-            //Azimuth = $"000° 00:00.00";
-            //Altitude = $"000° 00:00.00";
-            //Lha = $"00:00:00";
-            //DegX = $"0";
-            //DegY = $"0";
-            //SiderealTime = $"00:00:00";
-            //PierSide = SOP.pierUnknown;
-
             RightAscension = string.Empty;
             Declination = string.Empty;
             Azimuth = string.Empty;
@@ -262,13 +256,9 @@ namespace GS.Point3D
             get => _modelOn;
             set
             {
-                _modelOn = value;
-                if (value)
-                {
-                    Rotate();
-                    LoadGEM();
-                }
-                OnPropertyChanged();
+                if (!SetProperty(ref _modelOn, value)) return;
+                Rotate();
+                LoadGEM();
             }
         }
 
@@ -278,9 +268,7 @@ namespace GS.Point3D
             get => _position;
             set
             {
-                if (_position == value) return;
-                _position = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _position, value)) { }
             }
         }
 
@@ -290,9 +278,7 @@ namespace GS.Point3D
             get => _lookDirection;
             set
             {
-                if (_lookDirection == value) return;
-                _lookDirection = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _lookDirection, value)) { }
             }
         }
 
@@ -302,9 +288,7 @@ namespace GS.Point3D
             get => _upDirection;
             set
             {
-                if (_upDirection == value) return;
-                _upDirection = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _upDirection, value)) { }
             }
         }
         
@@ -374,7 +358,6 @@ namespace GS.Point3D
             set
             {
                 GeneralSettings.DescriptionVis = value;
-                //Name = value ? Description : null;
                 OnPropertyChanged();
             }
         }
@@ -435,9 +418,7 @@ namespace GS.Point3D
             get => _siderealTime;
             set
             {
-                if (value == _siderealTime) return;
-                _siderealTime = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _siderealTime, value)) { }
             }
         }
 
@@ -447,9 +428,7 @@ namespace GS.Point3D
             get => _model;
             set
             {
-                if (_model == value) return;
-                _model = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _model, value)) { }
             }
         }
 
@@ -459,9 +438,7 @@ namespace GS.Point3D
             get => _xAxis;
             set
             {
-                _xAxis = value;
-                XAxisOffset = value + XOffset;
-                OnPropertyChanged();
+                if (SetProperty(ref _xAxis, value)) { XAxisOffset = value + XOffset; }
             }
         }
 
@@ -471,9 +448,7 @@ namespace GS.Point3D
             get => _yAxis;
             set
             {
-                _yAxis = value;
-                YAxisOffset = value + YOffset;
-                OnPropertyChanged();
+                if (SetProperty(ref _yAxis, value)) { YAxisOffset = value + YOffset; }
             }
         }
 
@@ -483,9 +458,7 @@ namespace GS.Point3D
             get => _zAxis;
             set
             {
-                _zAxis = value;
-                ZAxisOffset = ZOffset - value;
-                OnPropertyChanged();
+                if (SetProperty(ref _zAxis, value)) { ZAxisOffset = ZOffset - value; }
             }
         }
 
@@ -495,8 +468,7 @@ namespace GS.Point3D
             get => _xAxisOffset;
             set
             {
-                _xAxisOffset = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _xAxisOffset, value)) { }
             }
         }
 
@@ -506,8 +478,7 @@ namespace GS.Point3D
             get => _yAxisOffset;
             set
             {
-                _yAxisOffset = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _yAxisOffset, value)) { }
             }
         }
 
@@ -517,8 +488,7 @@ namespace GS.Point3D
             get => _zAxisOffset;
             set
             {
-                _zAxisOffset = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _zAxisOffset, value)) { }
             }
         }
 
@@ -538,13 +508,11 @@ namespace GS.Point3D
         public Material Compass
         {
             get => _compass;
-            set
+            private set
             {
-                _compass = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _compass, value)) { }
             }
         }
-
         private void LoadGEM()
         {
             try
@@ -580,10 +548,10 @@ namespace GS.Point3D
                 }
                 //color weights
                 var materialweights = MaterialHelper.CreateMaterial(new SolidColorBrush(Color.FromRgb(64, 64, 64)));
-                if (model.Children[1] is GeometryModel3D weights) weights.Material = materialweights;
+                if (model.Children[1] is GeometryModel3D weights){weights.Material = materialweights;}
                 //color bar
                 var materialbar = MaterialHelper.CreateMaterial(Brushes.Gainsboro);
-                if (model.Children[2] is GeometryModel3D bar) bar.Material = materialbar;
+                if (model.Children[2] is GeometryModel3D bar){bar.Material = materialbar;}
 
                 Model = model;
             }
@@ -610,24 +578,21 @@ namespace GS.Point3D
             XAxis = axes[1];
         }
 
-        private ICommand _openResetViewCmd;
-        public ICommand OpenResetViewCmd
+        private RelayCommand _openResetViewCmd;
+        public RelayCommand OpenResetViewCmd
         {
             get
             {
                 var cmd = _openResetViewCmd;
-                if (cmd != null)
-                {
-                    return cmd;
-                }
-
-                return _openResetViewCmd = new RelayCmd(param => OpenResetView());
+                if (cmd != null) { return cmd; }
+                return _openResetViewCmd = new RelayCommand(OpenResetView);
             }
         }
         private void OpenResetView()
         {
             try
             {
+                LogCmd(MethodBase.GetCurrentMethod()?.Name);
                 GeneralSettings.ModelLookDirection = new Vector3D(-2616, -3167, -1170);
                 GeneralSettings.ModelUpDirection = new Vector3D(.35, .43, .82);
                 GeneralSettings.ModelPosition = new System.Windows.Media.Media3D.Point3D(2523, 3000, 1379);
@@ -653,18 +618,15 @@ namespace GS.Point3D
         #endregion
 
         #region Polling
-
         private bool LogFirstPoll { get; set; }
         
         private string _altitude;
         public string Altitude
         {
             get => _altitude;
-            set
+            private set
             {
-                if (value == _altitude) return;
-                _altitude = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _altitude, value)) { }
             }
         }
 
@@ -672,11 +634,9 @@ namespace GS.Point3D
         public string Azimuth
         {
             get => _azimuth;
-            set
+            private set
             {
-                if (value == _azimuth) return;
-                _azimuth = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _azimuth, value)) { }
             }
         }
 
@@ -684,11 +644,9 @@ namespace GS.Point3D
         public string Declination
         {
             get => _declination;
-            set
+            private set
             {
-                if (value == _declination) return;
-                _declination = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _declination, value)) { }
             }
         }
 
@@ -696,11 +654,9 @@ namespace GS.Point3D
         public string Lha
         {
             get => _lha;
-            set
+            private set
             {
-                if (value == _lha) return;
-                _lha = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _lha, value)) { }
             }
         }
 
@@ -708,11 +664,9 @@ namespace GS.Point3D
         public string RightAscension
         {
             get => _rightAscension;
-            set
+            private set
             {
-                if (value == _rightAscension) return;
-                _rightAscension = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _rightAscension, value)) { }
             }
         }
 
@@ -722,9 +676,7 @@ namespace GS.Point3D
             get => _degX;
             private set
             {
-                if (_degX == value) return;
-                _degX = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _degX, value)) { }
             }
         }
 
@@ -734,12 +686,10 @@ namespace GS.Point3D
             get => _degY;
             private set
             {
-                if (_degY == value) return;
-                _degY = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _degY, value)) { }
             }
         }
-        
+
         public AlignMode AlignmentMode { get; set; }
 
         private double _axis0;
@@ -1095,31 +1045,23 @@ namespace GS.Point3D
             }
         }
 
-
-        private ICommand _clickBaseCommand;
-
-        public ICommand ClickBaseCommand
+        private RelayCommand<object> _clickBaseCmd;
+        public RelayCommand<object> ClickBaseCmd
         {
             get
             {
-                var command = _clickBaseCommand;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _clickBaseCommand = new RelayCmd(
-                    param => ClickBase((bool)param)
-                );
+                var cmd = _clickBaseCmd;
+                if (cmd != null) { return cmd; }
+                return _clickBaseCmd = new RelayCommand<object>(param => ClickBase((bool)param));
             }
         }
-
         private void ClickBase(bool isDark)
         {
             try
             {
                 using (new WaitCursor())
                 {
+                    LogCmd(MethodBase.GetCurrentMethod()?.Name);
                     var paletteHelper = new PaletteHelper();
                     var theme = paletteHelper.GetTheme();
                     theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light);
@@ -1174,8 +1116,7 @@ namespace GS.Point3D
             get => _connected;
             set
             {
-                _connected = value;
-                if (value)
+                if (SetProperty(ref _connected, value))
                 {
                     StartPolling();
                 }
@@ -1183,7 +1124,6 @@ namespace GS.Point3D
                 {
                     StopPolling();
                 }
-                OnPropertyChanged();
             }
         }
 
@@ -1193,32 +1133,25 @@ namespace GS.Point3D
             get => _connectBadgeContent;
             set
             {
-                if (_connectBadgeContent == value) return;
-                _connectBadgeContent = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _connectBadgeContent, value)) { }
             }
         }
 
-        private ICommand _clickChooserCmd;
-        public ICommand ClickChooserCmd
+        private RelayCommand _clickChooserCmd;
+        public RelayCommand ClickChooserCmd
         {
             get
             {
-                var command = _clickChooserCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _clickChooserCmd = new RelayCmd(
-                    param => ClickChooser()
-                );
+                var cmd = _clickChooserCmd;
+                if (cmd != null) { return cmd; }
+                return _clickChooserCmd = new RelayCommand(ClickChooser);
             }
         }
         private void ClickChooser()
         {
             try
             {
+                LogCmd(MethodBase.GetCurrentMethod()?.Name);
                 var chooser = new Chooser {DeviceType = @"Telescope"};
                 var id = chooser.Choose(TelescopeID);
                 chooser.Dispose();
@@ -1242,26 +1175,22 @@ namespace GS.Point3D
             }
         }
 
-        private ICommand _clickConnectCmd;
-        public ICommand ClickConnectCmd
+        private RelayCommand _clickConnectCmd;
+        public RelayCommand ClickConnectCmd
         {
             get
             {
-                var command = _clickConnectCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _clickConnectCmd = new RelayCmd(
-                    param => ClickConnect()
-                );
+                var cmd = _clickConnectCmd;
+                if (cmd != null) { return cmd; }
+                return _clickConnectCmd = new RelayCommand(ClickConnect);
             }
         }
+
         private void ClickConnect()
         {
             try
             {
+                LogCmd(MethodBase.GetCurrentMethod()?.Name);
                 using (new WaitCursor())
                 {
                     Connect(!Connected);
@@ -1366,8 +1295,7 @@ namespace GS.Point3D
             get => _title;
             set
             {
-                _title = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _title, value)) { }
             }
         }
 
@@ -1377,8 +1305,7 @@ namespace GS.Point3D
             get => _version;
             set
             {
-                _version = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _version, value)) { }
             }
         }
 
@@ -1398,9 +1325,8 @@ namespace GS.Point3D
             get => _windowHeight;
             set
             {
-                if (Math.Abs(value - _windowHeight) < 10) return;
-                _windowHeight = value;
-                OnPropertyChanged();
+                if (Math.Abs(value - _windowHeight) < 10) {return;}
+                if (SetProperty(ref _windowHeight, value)) { }
             }
         }
 
@@ -1410,9 +1336,8 @@ namespace GS.Point3D
             get => _windowWidth;
             set
             {
-                if (Math.Abs(value - _windowWidth) < 10) return;
-                _windowWidth = value;
-                OnPropertyChanged();
+                if (Math.Abs(value - _windowWidth) < 10){return;}
+                if (SetProperty(ref _windowWidth, value)) { }
             }
         }
 
@@ -1422,9 +1347,8 @@ namespace GS.Point3D
             get => _windowLeft;
             set
             {
-                if (Math.Abs(value - _windowLeft) < 10) return;
-                _windowLeft = value;
-                OnPropertyChanged();
+                if (Math.Abs(value - _windowLeft) < 10) {return;}
+                if (SetProperty(ref _windowLeft, value)) { }
             }
         }
 
@@ -1434,72 +1358,56 @@ namespace GS.Point3D
             get => _windowTop;
             set
             {
-                if (Math.Abs(value - _windowTop) < 10) return;
-                _windowTop = value;
-                OnPropertyChanged();
+                if (Math.Abs(value - _windowTop) < 10) {return;}
+                if (SetProperty(ref _windowTop, value)) { }
             }
         }
 
-        private ICommand _minimizeWindowCmd;
-        public ICommand MinimizeWindowCmd
+        private RelayCommand _minimizeWindowCmd;
+        public RelayCommand MinimizeWindowCmd
         {
             get
             {
-                var command = _minimizeWindowCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _minimizeWindowCmd = new RelayCmd(
-                    param => MinimizeWindow()
-                );
+                var cmd = _minimizeWindowCmd;
+                if (cmd != null){return cmd;}
+                return _minimizeWindowCmd = new RelayCommand(MinimizeWindow);
             }
         }
         private void MinimizeWindow()
         {
+            LogCmd(MethodBase.GetCurrentMethod()?.Name);
             WindowStates = WindowState.Minimized;
         }
 
-        private ICommand _maximizeWindowCmd;
-        public ICommand MaximizeWindowCmd
+        private RelayCommand _maximizeWindowCmd;
+        public RelayCommand MaximizeWindowCmd
         {
             get
             {
-                var command = _maximizeWindowCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _maximizeWindowCmd = new RelayCmd(
-                    param => MaximizeWindow()
-                );
+                var cmd = _maximizeWindowCmd;
+                if (cmd != null){return cmd;}
+                return _maximizeWindowCmd = new RelayCommand(MaximizeWindow);
             }
         }
         private void MaximizeWindow()
         {
+            LogCmd(MethodBase.GetCurrentMethod()?.Name);
             WindowStates = WindowStates != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
         }
 
-        private ICommand _closeWindowCmd;
-        public ICommand CloseWindowCmd
+        private RelayCommand _closeWindowCmd;
+        public RelayCommand CloseWindowCmd
         {
             get
             {
                 var cmd = _closeWindowCmd;
-                if (cmd != null)
-                {
-                    return cmd;
-                }
-
-                return _closeWindowCmd = new RelayCmd(
-                    param => CloseWindow()
-                );
+                if (cmd != null){return cmd;}
+                return _closeWindowCmd = new RelayCommand(CloseWindow);
             }
         }
         private void CloseWindow()
         {
+            LogCmd(MethodBase.GetCurrentMethod()?.Name);
             Connect(false);
             var win = Application.Current.Windows.OfType<MainWindowV>().FirstOrDefault();
             win?.Close();
@@ -1511,8 +1419,7 @@ namespace GS.Point3D
             get => _windowState;
             set
             {
-                _windowState = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _windowState, value)) { }
             }
         }
 
@@ -1526,9 +1433,7 @@ namespace GS.Point3D
             get => _DialogMsg;
             set
             {
-                if (_DialogMsg == value) return;
-                _DialogMsg = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _DialogMsg, value)) { }
             }
         }
 
@@ -1538,9 +1443,7 @@ namespace GS.Point3D
             get => _isDialogOpen;
             set
             {
-                if (_isDialogOpen == value) return;
-                _isDialogOpen = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _isDialogOpen, value )) { }
             }
         }
 
@@ -1550,9 +1453,7 @@ namespace GS.Point3D
             get => _dialogCaption;
             set
             {
-                if (_dialogCaption == value) return;
-                _dialogCaption = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _dialogCaption, value)) { }
             }
         }
 
@@ -1562,29 +1463,11 @@ namespace GS.Point3D
             get => _dialogContent;
             set
             {
-                if (_dialogContent == value) return;
-                _dialogContent = value;
-                OnPropertyChanged();
+                if (SetProperty(ref _dialogContent, value)) { }
             }
         }
 
-        private ICommand _openDialogCmd;
-        public ICommand OpenDialogCmd
-        {
-            get
-            {
-
-                var command = _openDialogCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _openDialogCmd = new RelayCmd(
-                    param => OpenDialog(null)
-                );
-            }
-        }
+        //public ICommand OpenDialogCmd { get; private set; }
         private void OpenDialog(string msg, string caption = null)
         {
             if (msg != null) DialogMsg = msg;
@@ -1605,79 +1488,43 @@ namespace GS.Point3D
             Helpers.Monitor.LogToMonitor(monitorItem);
         }
 
-        private ICommand _clickOkDialogCmd;
-        public ICommand ClickOkDialogCmd
+        private RelayCommand _clickOkDialogCmd;
+        public RelayCommand ClickOkDialogCmd
         {
             get
             {
-                var command = _clickOkDialogCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _clickOkDialogCmd = new RelayCmd(
-                    param => ClickOkDialog()
-                );
+                var cmd = _clickOkDialogCmd;
+                if (cmd != null) { return cmd; }
+                return _clickOkDialogCmd = new RelayCommand(ClickOkDialog);
             }
         }
         private void ClickOkDialog()
         {
+            LogCmd(MethodBase.GetCurrentMethod()?.Name);
             IsDialogOpen = false;
         }
 
-        private ICommand _cancelDialogCmd;
-        public ICommand CancelDialogCmd
-        {
-            get
-            {
-                var command = _cancelDialogCmd;
-                if (command != null)
-                {
-                    return command;
-                }
+        //private ICommand CancelDialogCmd { get; set; }
+        //private void CancelDialog()
+        //{
+        //    IsDialogOpen = false;
+        //}
 
-                return _cancelDialogCmd = new RelayCmd(
-                    param => CancelDialog()
-                );
-            }
-        }
-        private void CancelDialog()
-        {
-            IsDialogOpen = false;
-        }
+        //private ICommand RunMessageDialogCmd { get; set; }
+        //private async void ExecuteMessageDialog()
+        //{
+        //    var view = new ErrorMessageDialog
+        //    {
+        //        DataContext = new ErrorMessageDialogVM()
+        //    };
 
-        private ICommand _runMessageDialog;
-
-        public ICommand RunMessageDialogCmd
-        {
-            get
-            {
-                var command = _runMessageDialog;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _runMessageDialog = new RelayCmd(
-                    param => ExecuteMessageDialog()
-                );
-            }
-        }
-        private async void ExecuteMessageDialog()
-        {
-            var view = new ErrorMessageDialog
-            {
-                DataContext = new ErrorMessageDialogVM()
-            };
-
-            //show the dialog
-            await DialogHost.Show(view, "RootDialog", ClosingMessageEventHandler);
-        }
-        private static void ClosingMessageEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            Console.WriteLine(@"You can intercept the closing event, and cancel here.");
-        }
+        //    //show the dialog
+        //    await DialogHost.Show(view, "RootDialog", ClosingMessageEventHandler);
+        //}
+        //private static void ClosingMessageEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        //{
+        //    Console.WriteLine(@"You can intercept the closing event, and cancel here.");
+        //}
 
         #endregion
 
@@ -1731,32 +1578,57 @@ namespace GS.Point3D
         }
         #endregion
 
+        #region Log
+
+        private void LogCmd(string cmd)
+        {
+            var monitorItem = new MonitorEntry
+            {
+                Datetime = DateTime.Now,
+                Device = MonitorDevice.Program,
+                Category = MonitorCategory.Interface,
+                Type = MonitorType.Information,
+                Method = MethodBase.GetCurrentMethod()?.Name,
+                Thread = Thread.CurrentThread.ManagedThreadId,
+                Message = $"{GetType().Name}:{cmd}"
+            };
+            Helpers.Monitor.LogToMonitor(monitorItem);
+        }
+        #endregion
+
         #region Test
 
-        private ICommand _clickTestCmd;
-        public ICommand ClickTestCmd
+        private bool _testVis;
+        public bool TestVis
+        {
+            get => _testVis;
+            set
+            {
+                if (SetProperty(ref _testVis, value)) { }
+            }
+        }
+
+        private RelayCommand<object> _testCmd;
+        public RelayCommand<object> TestCmd
         {
             get
             {
-                var command = _clickTestCmd;
-                if (command != null)
-                {
-                    return command;
-                }
-
-                return _clickTestCmd = new RelayCmd(
-                    param => ClickTest()
-                );
+                var cmd = _testCmd;
+                if (cmd != null) { return cmd; }
+                return _testCmd = new RelayCommand<object>(param => ClickTest((string)param));
             }
         }
-        private void ClickTest()
+
+        private void ClickTest(string msg)
         {
             try
             {
+                LogCmd(MethodBase.GetCurrentMethod()?.Name);
                 using (new WaitCursor())
                 {
-                 //   _telescope.MoveAxis(TelescopeAxes.axisPrimary, 1);
-                    _telescope.MoveAxis(TelescopeAxes.axisPrimary, 0);
+                    //   _telescope.MoveAxis(TelescopeAxes.axisPrimary, 1);
+                    //  _telescope.MoveAxis(TelescopeAxes.axisPrimary, 0);
+                    OpenDialog(msg);
                 }
             }
             catch (Exception e)
@@ -1779,5 +1651,6 @@ namespace GS.Point3D
         }
 
         #endregion
+
     }
 }

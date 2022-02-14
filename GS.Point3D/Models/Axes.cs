@@ -15,6 +15,7 @@
  */
 using System;
 using GS.Point3D.Helpers;
+using GS.Point3D.ViewModels;
 
 namespace GS.Point3D.Classes
 {

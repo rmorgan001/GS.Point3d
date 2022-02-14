@@ -20,7 +20,8 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                  xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
                  xmlns:point3D="clr-namespace:GS.Point3D"
-                 mc:Ignorable="d" d:DataContext="{d:DesignInstance point3D:MainWindowVM, IsDesignTimeCreatable=True}">
+                 xmlns:viewModels="clr-namespace:GS.Point3D.ViewModels"
+                 mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainWindowVM, IsDesignTimeCreatable=True}">
     <StackPanel Background="Black">
         <Grid MinWidth="100">
             <Grid.ColumnDefinitions>

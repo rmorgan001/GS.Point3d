@@ -13,9 +13,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 
-namespace GS.Point3D
+using System;
+using GS.Point3D.ViewModels;
+
+namespace GS.Point3D.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

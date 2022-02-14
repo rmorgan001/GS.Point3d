@@ -16,7 +16,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
 <Application x:Class="GS.Point3D.App"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                 StartupUri="MainWindowV.xaml">
+                 StartupUri="Views/MainWindowV.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -13,6 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -21,8 +22,10 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Media3D;
+using GS.Point3D.Helpers;
+using Monitor = GS.Point3D.Helpers.Monitor;
 
-namespace GS.Point3D.Helpers
+namespace GS.Point3D.Settings
 {
     public static class GeneralSettings
     {

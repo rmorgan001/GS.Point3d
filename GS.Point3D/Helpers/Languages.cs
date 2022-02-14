@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using GS.Point3D.Settings;
 
 namespace GS.Point3D.Helpers
 {

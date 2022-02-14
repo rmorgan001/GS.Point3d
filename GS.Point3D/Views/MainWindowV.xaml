@@ -13,20 +13,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see<https: //www.gnu.org/licenses/> .
 */-->
-    <Window x:Class="GS.Point3D.MainWindowV"
+    <Window x:Class="GS.Point3D.Views.MainWindowV"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:GS.Point3D"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:controls="clr-namespace:GS.Point3D.Controls" 
             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mdc="clr-namespace:MaterialDesignColors;assembly=MaterialDesignColors"
             xmlns:cvt="clr-namespace:GS.Point3D.Converters"
             xmlns:domain="clr-namespace:GS.Point3D.Domain"
             xmlns:helpers="clr-namespace:GS.Point3D.Helpers"
+            xmlns:viewModels="clr-namespace:GS.Point3D.ViewModels"
             mc:Ignorable="d" Title="GS Server" FontStretch="Normal" TextElement.FontSize="14" 
             ResizeMode="CanResizeWithGrip" WindowStyle="None" TextOptions.TextFormattingMode="Display" 
             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" 
-            d:DataContext="{d:DesignInstance local:MainWindowVM, IsDesignTimeCreatable=True}" 
+            d:DataContext="{d:DesignInstance viewModels:MainWindowVM, IsDesignTimeCreatable=True}" 
             TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
             WindowState="{Binding WindowStates}" 
             Height="{Binding WindowHeight, Mode=TwoWay}" 
@@ -108,7 +109,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 <StackPanel Orientation="Horizontal" Margin="5">
                                     <TextBlock VerticalAlignment="Center" Text="{StaticResource optLight}" />
                                     <ToggleButton Margin="5,0,5,0" Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                                                  IsChecked="{Binding DarkTheme}" Command="{Binding ClickBaseCommand}" 
+                                                  IsChecked="{Binding DarkTheme}" Command="{Binding ClickBaseCmd}" 
                                                   CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" />
                                     <TextBlock VerticalAlignment="Center" Text="{StaticResource optDark}" />
                                 </StackPanel>
@@ -259,7 +260,9 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 <Span xml:space="preserve"><Hyperlink Command="{Binding ClickDonateCmd}">Click to Donate</Hyperlink></Span>
                             </TextBlock>
 
-                            <Button Grid.Row="7" ToolTip="Test" Content="Test" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding ClickTestCmd}" Visibility="Collapsed"/>
+                            <Button Grid.Row="7" ToolTip="Test" Content="Test" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding TestCmd}" CommandParameter="Orange" 
+                                    Visibility="{Binding TestVis, Converter={StaticResource BoolToClap}}"
+                                    />
 
                         </Grid>
                     </md:DrawerHost.LeftDrawerContent>
