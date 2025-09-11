@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using ASCOM.DriverAccess;
@@ -1501,27 +1502,27 @@ namespace GS.Point3D.ViewModels
             Helpers.Monitor.LogToMonitor(monitorItem);
         }
 
-        //private RelayCommand _clickOkDialogCmd;
-        //public RelayCommand ClickOkDialogCmd
-        //{
-        //    get
-        //    {
-        //        var cmd = _clickOkDialogCmd;
-        //        if (cmd != null) { return cmd; }
-        //        return _clickOkDialogCmd = new RelayCommand(ClickOkDialog);
-        //    }
-        //}
-        //private void ClickOkDialog()
-        //{
-        //    LogCmd(MethodBase.GetCurrentMethod()?.Name);
-        //    IsDialogOpen = false;
-        //}
+        private RelayCommand _clickOkDialogCmd;
+        public RelayCommand ClickOkDialogCmd
+        {
+            get
+            {
+                var cmd = _clickOkDialogCmd;
+                if (cmd != null) { return cmd; }
+                return _clickOkDialogCmd = new RelayCommand(ClickOkDialog);
+            }
+        }
+        private void ClickOkDialog()
+        {
+            LogCmd(MethodBase.GetCurrentMethod()?.Name);
+            IsDialogOpen = false;
+        }
 
-        //private ICommand CancelDialogCmd { get; set; }
-        //private void CancelDialog()
-        //{
-        //    IsDialogOpen = false;
-        //}
+        private ICommand CancelDialogCmd { get; set; }
+        private void CancelDialog()
+        {
+            IsDialogOpen = false;
+        }
 
         //private ICommand RunMessageDialogCmd { get; set; }
         //private async void ExecuteMessageDialog()
@@ -1533,7 +1534,7 @@ namespace GS.Point3D.ViewModels
 
         //    //show the dialog
         //    await DialogHost.Show(view, "RootDialog", ClosingMessageEventHandler);
-        //{}
+        //    { }
         //private static void ClosingMessageEventHandler(object sender, DialogClosingEventArgs eventArgs)
         //{
         //    Console.WriteLine(@"You can intercept the closing event, and cancel here.");
