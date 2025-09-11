@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -13,19 +13,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 using System;
 using GS.Point3D.Helpers;
 using GS.Point3D.ViewModels;
 
-namespace GS.Point3D.Classes
+namespace GS.Point3D.Models
 {
     public static class Axes
     {
-        private static readonly MainWindowVM _mainWindowVM;
+        private static readonly MainWindowVm MainWindowLocalVm;
 
         static Axes()
         {
-             _mainWindowVM = MainWindowVM._mainWindowVM;
+             MainWindowLocalVm = MainWindowVm.MainWindowVmLocal;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace GS.Point3D.Classes
         /// </summary>
         /// <param name="raDec"></param>
         /// <returns></returns>
-        internal static double[] RaDecToAxesXY(AlignMode mode, double[] raDec)
+        internal static double[] RaDecToAxesXy(AlignMode mode, double[] raDec)
         {
             var axes = new[] {raDec[0], raDec[1]};
             switch (mode)
@@ -43,22 +44,22 @@ namespace GS.Point3D.Classes
                     //axes = Coordinate.RaDec2AltAz(axes[0], axes[1], SkyServer.SiderealTime, SkySettings.Latitude);
                     return axes;
                 case AlignMode.algGermanPolar:
-                    axes[0] = (_mainWindowVM.SideRealtime - axes[0]) * 15.0;
-                    if (_mainWindowVM.SouthernHemisphere){axes[1] = -axes[1];}
+                    axes[0] = (MainWindowLocalVm.SideRealtime - axes[0]) * 15.0;
+                    if (MainWindowLocalVm.SouthernHemisphere){axes[1] = -axes[1];}
 
-                    _mainWindowVM.Axis2 = axes[0];
-                    _mainWindowVM.Axis3 = axes[1];
+                    MainWindowLocalVm.Axis2 = axes[0];
+                    MainWindowLocalVm.Axis3 = axes[1];
 
                     var axes3 = GetAltAxisPosition(axes);
-                    _mainWindowVM.Axis4 = axes3[0];
-                    _mainWindowVM.Axis5 = axes3[1];
+                    MainWindowLocalVm.Axis4 = axes3[0];
+                    MainWindowLocalVm.Axis5 = axes3[1];
 
-                    switch (_mainWindowVM.PierSide)
+                    switch (MainWindowLocalVm.PierSide)
                     {
-                        case SOP.pierUnknown:
+                        case SoP.pierUnknown:
                             break;
-                        case SOP.pierEast:
-                            if (_mainWindowVM.SouthernHemisphere)
+                        case SoP.pierEast:
+                            if (MainWindowLocalVm.SouthernHemisphere)
                             {
                                 // southern
                                 axes[0] = axes[0];
@@ -71,8 +72,8 @@ namespace GS.Point3D.Classes
                             }
 
                             break;
-                        case SOP.pierWest:
-                            if (_mainWindowVM.SouthernHemisphere)
+                        case SoP.pierWest:
+                            if (MainWindowLocalVm.SouthernHemisphere)
                             {
                                 // southern
                                 axes[0] = axes3[0];
@@ -95,12 +96,11 @@ namespace GS.Point3D.Classes
                     //axes[1] = (SkyServer.SouthernHemisphere) ? -axes[1] : axes[1];
                     break;
                 case AlignMode.algUnknown:
-                    throw new ArgumentOutOfRangeException();
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            axes = Range.RangeAxesXY(axes);
+            axes = Range.RangeAxesXy(axes);
             return axes;
         }
 
@@ -115,13 +115,13 @@ namespace GS.Point3D.Classes
             if (alt[0] > 90)
             {
                 d[0] = alt[0] - 180;
-                d[1] = 180 - alt[1];
             }
             else
             {
                 d[0] = alt[0] + 180;
-                d[1] = 180 - alt[1];
             }
+
+            d[1] = 180 - alt[1];
 
             return d;
         }

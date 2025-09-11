@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -151,7 +151,7 @@ namespace GS.Point3D.Helpers
         /// </summary>
         /// <param name="axes"></param>
         /// <returns></returns>
-        public static double[] RangeAxesXY(double[] axes)
+        public static double[] RangeAxesXy(double[] axes)
         {
             double[] xy = { Range360(axes[0]), Range270(axes[1]) };
             return xy;
@@ -162,7 +162,7 @@ namespace GS.Point3D.Helpers
         /// </summary>
         /// <param name="axes"></param>
         /// <returns></returns>
-        public static double[] RangeAxesYX(double[] axes)
+        public static double[] RangeAxesYx(double[] axes)
         {
             double[] xy = { Range270(axes[1]), Range360(axes[0]) };
             return xy;

@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -18,9 +18,9 @@ using System;
 using System.ComponentModel;
 using GS.Point3D.Domain;
 
-namespace GS.Point3D.Controls
+namespace GS.Point3D.ViewModels
 {
-    class ErrorMessageDialogVM : INotifyPropertyChanged
+    internal class ErrorMessageDialogVm : INotifyPropertyChanged
     {
         private string _name;
         public string Name

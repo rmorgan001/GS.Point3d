@@ -43,7 +43,7 @@ namespace GS.Point3D
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Languages.SetLanguageDictionary(false, LanguageApp.GSPoint3D);
+            Languages.SetLanguageDictionary(false, LanguageApp.GsPoint3D);
         }
     }
 

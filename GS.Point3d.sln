@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GS.Point3D", "GS.Point3D\GS.Point3D.csproj", "{FA2B9A3F-98A7-43BC-9990-701D6FAED9CD}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GS.Point3DInstaller", "GS.Point3DInstaller\GS.Point3DInstaller.vdproj", "{5FEB7403-8E3F-4DD6-86F2-05FF0E5ABDF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +15,6 @@ Global
 		{FA2B9A3F-98A7-43BC-9990-701D6FAED9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA2B9A3F-98A7-43BC-9990-701D6FAED9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA2B9A3F-98A7-43BC-9990-701D6FAED9CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FEB7403-8E3F-4DD6-86F2-05FF0E5ABDF1}.Debug|Any CPU.ActiveCfg = Debug
-		{5FEB7403-8E3F-4DD6-86F2-05FF0E5ABDF1}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

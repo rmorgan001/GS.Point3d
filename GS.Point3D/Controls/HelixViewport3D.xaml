@@ -1,5 +1,5 @@
 ﻿<!--
-    /* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+    /* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
@@ -17,14 +17,13 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                 xmlns:point3D="clr-namespace:GS.Point3D" 
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:wpf="http://helix-toolkit.org/wpf"
                  xmlns:viewModels="clr-namespace:GS.Point3D.ViewModels"
-                 mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainWindowVM}" d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <wpf:HelixViewport3D ShowCameraInfo="{Binding CameraVis}" Background="Transparent" ShowViewCube="False" ViewCubeVerticalPosition="Top" ShowCameraTarget="False" FontStyle="Normal" Title="{Binding Name}" 
-                             TitleBackground="DarkGray"  TitleSize="12" TitleFontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+                 mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainWindowVm}" d:DesignHeight="450" d:DesignWidth="800">
+    <Grid >
+        <wpf:HelixViewport3D ShowCameraInfo="{Binding CameraVis}" Background="Transparent" ShowViewCube="{Binding CubeVis}" ViewCubeVerticalPosition="Top" ShowCameraTarget="False" FontStyle="Normal" Title="{Binding Name}" 
+                             TitleBackground="DarkGray"  TitleSize="12" TitleFontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" >
             <wpf:HelixViewport3D.Camera>
                 <PerspectiveCamera FieldOfView="60" LookDirection="{Binding LookDirection, Mode=TwoWay}" UpDirection="{Binding UpDirection, Mode=TwoWay}" Position="{Binding Position,Mode=TwoWay}" />
             </wpf:HelixViewport3D.Camera>

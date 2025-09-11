@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -27,7 +27,7 @@ namespace GS.Point3D.Helpers
         RitcheyChretienTruss = 5
     }
 
-    public enum SOP
+    public enum SoP
     {
         pierUnknown = -1,
         pierEast = 0,

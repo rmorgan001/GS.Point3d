@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -191,6 +191,20 @@ namespace GS.Point3D.Settings
             }
         }
 
+        private static bool _cubeVis;
+        public static bool CubeVis
+        {
+            get => _cubeVis;
+            set
+            {
+                if (_cubeVis == value) return;
+                _cubeVis = value;
+                Domain.General.Default.CubeVis = value;
+                LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
+                OnStaticPropertyChanged();
+            }
+        }
+
         private static bool _raAxisVis;
         public static bool RaAxisVis
         {
@@ -368,14 +382,14 @@ namespace GS.Point3D.Settings
             }
         }
 
-        private static string _telescopeID;
-        public static string TelescopeID
+        private static string _telescopeId;
+        public static string TelescopeId
         {
-            get => _telescopeID;
+            get => _telescopeId;
             set
             {
-                if (_telescopeID == value) return;
-                _telescopeID = value;
+                if (_telescopeId == value) return;
+                _telescopeId = value;
                 Domain.General.Default.TelescopeID = value;
                 LogSetting(MethodBase.GetCurrentMethod()?.Name, $"{value}");
                 OnStaticPropertyChanged();
@@ -545,6 +559,7 @@ namespace GS.Point3D.Settings
             AltVis = Domain.General.Default.AltVis;
             SideVis = Domain.General.Default.SideVis;
             CameraVis = Domain.General.Default.CameraVis;
+            CubeVis = Domain.General.Default.CubeVis;
             RaAxisVis = Domain.General.Default.RaAxisVis;
             DecAxisVis = Domain.General.Default.DecAxisVis;
             SopVis = Domain.General.Default.SopVis;
@@ -562,7 +577,7 @@ namespace GS.Point3D.Settings
             ModelUpDirection = Vector3D.Parse(Domain.General.Default.ModelUpDirection);
             PollTime = Domain.General.Default.PollTime;
             PrimaryColor = Domain.General.Default.PrimaryColor;
-            TelescopeID = Domain.General.Default.TelescopeID;
+            TelescopeId = Domain.General.Default.TelescopeID;
             TopMost = Domain.General.Default.TopMost;
             WindowHeight = Domain.General.Default.WindowHeight;
             WindowWidth = Domain.General.Default.WindowWidth;
@@ -570,8 +585,8 @@ namespace GS.Point3D.Settings
             WindowTop = Domain.General.Default.WindowTop;
             WindowState = Domain.General.Default.WindowState;
 
-            Enum.TryParse<Model3DType>(Domain.General.Default.ModelType, true, out var aparse);
-            ModelType = aparse;
+            Enum.TryParse<Model3DType>(Domain.General.Default.ModelType, true, out var aParse);
+            ModelType = aParse;
         }
 
         /// <summary>

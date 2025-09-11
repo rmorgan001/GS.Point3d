@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -34,8 +34,8 @@ namespace GS.Point3D.Helpers
         public static double Ra2Ha12(double rightAscension, double localSiderealTime)
         {
             var a = localSiderealTime - rightAscension;
-            var Ra2Ha = Range.Range12(a);
-            return Ra2Ha;
+            var ra2Ha = Range.Range12(a);
+            return ra2Ha;
         }
     }
 }

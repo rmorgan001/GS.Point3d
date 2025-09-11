@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -28,12 +28,11 @@ namespace GS.Point3D.Helpers
 {
     public static class Languages
     {
-        private static readonly string _directoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\LanguageFiles\\";
+        private static readonly string DirectoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\LanguageFiles\\";
 
         static Languages()
         {
-            var langs = new List<string>() { "en-US", "fr-FR" };
-            SupportedLanguages = langs;
+            SupportedLanguages = new List<string>() { "en-US", "fr-FR" };
         }
         public static void SetLanguageDictionary(bool local, LanguageApp app)
         {
@@ -55,21 +54,21 @@ namespace GS.Point3D.Helpers
         {
             var dict = new ResourceDictionary();
             Uri uri = null;
-            var localpath = string.Empty;
-            var filenotfound = false;
+            var localPath = string.Empty;
+            var fileNotFound = false;
             switch (app)
             {
-                case LanguageApp.GSPoint3D:
+                case LanguageApp.GsPoint3D:
                     switch (cultureInfo)
                     {
                         case "en-US":
                             uri = new Uri("GS.Point3D;component/Domain/StringResPoint3D_en-US.xaml", UriKind.Relative);
                             break;
                         default:
-                            localpath = new Uri(Path.Combine(_directoryPath, $"{Application.Current.Resources["FileName"]}_{cultureInfo}.xaml")).LocalPath;
-                            if (!File.Exists(localpath))
+                            localPath = new Uri(Path.Combine(DirectoryPath, $"{Application.Current.Resources["FileName"]}_{cultureInfo}.xaml")).LocalPath;
+                            if (!File.Exists(localPath))
                             {
-                                filenotfound = true;
+                                fileNotFound = true;
                                 uri = new Uri("GS.Point3D;component/Domain/StringResPoint3D_en-US.xaml", UriKind.Relative);
                             }
                             break;
@@ -89,7 +88,7 @@ namespace GS.Point3D.Helpers
                     Application.Current.Resources.MergedDictionaries.Add(dict);
                     break;
                 default:
-                    if (filenotfound)
+                    if (fileNotFound)
                     {
                         dict.Source = uri;
                         if (dict.Source == null)
@@ -100,7 +99,7 @@ namespace GS.Point3D.Helpers
                     }
                     else
                     {
-                        using (var fs = new FileStream(localpath, FileMode.Open, FileAccess.Read))
+                        using (var fs = new FileStream(localPath, FileMode.Open, FileAccess.Read))
                         {
                             var dic = (ResourceDictionary)XamlReader.Load(fs);
                             //Resources.MergedDictionaries.Clear();
@@ -120,6 +119,6 @@ namespace GS.Point3D.Helpers
 
     public enum LanguageApp
     {
-        GSPoint3D = 1,
+        GsPoint3D = 1,
     }
 }

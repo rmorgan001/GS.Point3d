@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net481</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>GS.Point3D.App</StartupObject>
     <ApplicationIcon>greenswamp3d4.ico</ApplicationIcon>

@@ -1,4 +1,4 @@
-﻿/* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+﻿/* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
@@ -28,26 +28,26 @@ namespace GS.Point3D.Helpers
     {
         #region Fields
         public static event PropertyChangedEventHandler StaticPropertyChanged;
-        private static readonly BlockingCollection<MonitorEntry> _monitorBlockingCollection;
+        private static readonly BlockingCollection<MonitorEntry> MonitorBlockingCollection;
         private static int _sessionIndex;
-        private static readonly string _instanceFileName;
-        private static readonly string _logPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        private static readonly string _point3DFile = Path.Combine(_logPath, "GSPoint3D\\GSPoint3DLog");
-        private static readonly SemaphoreSlim _lockFile = new SemaphoreSlim(1);
-        private const string fmt = "000000#";
+        private static readonly string InstanceFileName;
+        private static readonly string LogPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private static readonly string Point3DFile = Path.Combine(LogPath, "GSPoint3D\\GSPoint3DLog");
+        private static readonly SemaphoreSlim LockFile = new SemaphoreSlim(1);
+        private const string Fmt = "000000#";
         #endregion
 
         static Monitor()
         {
-            _instanceFileName = $"{DateTime.Now:yyyy-MM-dd-HH}.txt";
-            DeleteFiles("GSPoint3DLog", 7, _logPath);
+            InstanceFileName = $"{DateTime.Now:yyyy-MM-dd-HH}.txt";
+            DeleteFiles("GSPoint3DLog", 7, LogPath);
 
-            _monitorBlockingCollection = new BlockingCollection<MonitorEntry>();
+            MonitorBlockingCollection = new BlockingCollection<MonitorEntry>();
             Task.Factory.StartNew(() =>
             {
-                foreach (var monitorentry in _monitorBlockingCollection.GetConsumingEnumerable())
+                foreach (var monitorEntry in MonitorBlockingCollection.GetConsumingEnumerable())
                 {
-                    ProcessEntryQueueItem(monitorentry);
+                    ProcessEntryQueueItem(monitorEntry);
                 }
             });
         }
@@ -116,7 +116,7 @@ namespace GS.Point3D.Helpers
         /// <param name="entry"></param>
         public static void AddEntry(MonitorEntry entry)
         {
-             _monitorBlockingCollection.TryAdd(entry);
+             MonitorBlockingCollection.TryAdd(entry);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace GS.Point3D.Helpers
             {
                 if (!GeneralSettings.Log) return;
                 ++_sessionIndex;
-                FileWriteAsync(_point3DFile + _instanceFileName, $"{entry.Datetime.ToLocalTime():yyyy-MM-dd HH:mm:ss.fff},{_sessionIndex.ToString(fmt)},{entry.Category},{entry.Type},{entry.Thread},{entry.Method},{entry.Message}");
+                FileWriteAsync(Point3DFile + InstanceFileName, $"{entry.Datetime.ToLocalTime():yyyy-MM-dd HH:mm:ss.fff},{_sessionIndex.ToString(Fmt)},{entry.Category},{entry.Type},{entry.Thread},{entry.Method},{entry.Message}");
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace GS.Point3D.Helpers
         {
             try
             {
-                await _lockFile.WaitAsync();
+                await LockFile.WaitAsync();
 
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? throw new InvalidOperationException());
                 using (var stream = new FileStream(filePath, append ? FileMode.Append : FileMode.Create,
@@ -183,7 +183,7 @@ namespace GS.Point3D.Helpers
             }
             finally
             {
-                _lockFile.Release();
+                LockFile.Release();
             }
         }
 

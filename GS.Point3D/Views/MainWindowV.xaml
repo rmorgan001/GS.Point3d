@@ -1,5 +1,5 @@
 ﻿<!--
-    /* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+    /* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
@@ -27,7 +27,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
             mc:Ignorable="d" Title="GS Server" FontStretch="Normal" TextElement.FontSize="14" 
             ResizeMode="CanResizeWithGrip" WindowStyle="None" TextOptions.TextFormattingMode="Display" 
             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" 
-            d:DataContext="{d:DesignInstance viewModels:MainWindowVM, IsDesignTimeCreatable=True}" 
+            d:DataContext="{d:DesignInstance viewModels:MainWindowVm, IsDesignTimeCreatable=True}" 
             TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
             WindowState="{Binding WindowStates}" 
             Height="{Binding WindowHeight, Mode=TwoWay}" 
@@ -44,14 +44,14 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
         <cvt:ColorToBrushConverter x:Key="ColorToBrush" />
         <cvt:BoolToVisClapConverter x:Key="BoolToClap" />
     </Window.Resources>
-    <Grid Background="{DynamicResource MaterialDesignPaper}">
+    <Grid Background="{DynamicResource MaterialDesignPaper}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:WindowTitleBarBasic Grid.Row="0" />
         <md:DialogHost Grid.Row="1" CloseOnClickAway="True" IsOpen="{Binding IsDialogOpen}" DialogContent="{Binding DialogContent}">
-            <Grid>
+            <Grid >
                 <md:DrawerHost BorderThickness="2" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" BorderBrush="{DynamicResource MaterialDesignDivider}" >
                     <md:DrawerHost.LeftDrawerContent>
                         <Grid Width="450" ShowGridLines="False">
@@ -74,7 +74,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" IsEnabled="{Binding Connected, Converter={StaticResource InvBol}}">
                                 <Label VerticalAlignment="Bottom" Content="{StaticResource Telescope}" ContentStringFormat='{}{0}:'/>
                                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="{StaticResource Select}" ToolTip="{StaticResource Chooser}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding ClickChooserCmd}" />
-                                <Label VerticalAlignment="Bottom" Width="290" Content="{Binding TelescopeID}" />
+                                <Label VerticalAlignment="Bottom" Width="290" Content="{Binding TelescopeId}" />
                             </StackPanel>
                             <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
                                 <Label VerticalAlignment="Bottom" Content="{StaticResource Connect}" ContentStringFormat='{}{0}:' />
@@ -266,14 +266,14 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
 
                         </Grid>
                     </md:DrawerHost.LeftDrawerContent>
-                    <Grid>
+                    <Grid ShowGridLines="False" >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="50" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <ToggleButton IsChecked="False" x:Name="MenuToggleButton" Command="{x:Static md:DrawerHost.OpenDrawerCommand}" Style="{StaticResource MaterialDesignHamburgerToggleButton}" CommandParameter="{x:Static Dock.Left}" ToolTip="{StaticResource dSettings}" />
-                            <Label Margin="0,0,0,5" Opacity=".5" Content="{Binding Description}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="{Binding DescriptionVis, Converter={StaticResource BoolToClap}}" />
+                            <ToggleButton IsChecked="False" x:Name="MenuToggleButton" Command="{x:Static md:DrawerHost.OpenDrawerCommand}" VerticalAlignment="Center"  Style="{StaticResource MaterialDesignHamburgerToggleButton}" CommandParameter="{x:Static Dock.Left}" ToolTip="{StaticResource dSettings}" />
+                            <Label Margin="0,0,0,5" Opacity=".5" Content="{Binding Description}" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="{Binding DescriptionVis, Converter={StaticResource BoolToClap}}" />
                         </StackPanel>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,8">
                             <md:Badged Badge="{Binding ConnectBadgeContent}" BadgePlacementMode="TopRight" VerticalAlignment="Bottom" ToolTip="{StaticResource On}">
@@ -285,7 +285,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                             <md:PackIcon Kind="Resize" />
                         </Button>
                         </StackPanel>
-                        <controls:HelixViewport3D Grid.Row="1" IsEnabled="{Binding ModelOn}">
+                        <controls:HelixViewport3D Grid.Row="1" IsEnabled="{Binding ModelOn}" >
                             <controls:HelixViewport3D.Style>
                                 <Style TargetType="controls:HelixViewport3D">
                                     <Style.Triggers>
@@ -299,7 +299,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                 </Style>
                             </controls:HelixViewport3D.Style>
                         </controls:HelixViewport3D>
-                        <md:Flipper  Visibility="{Binding FlipCardVis, Converter={StaticResource BoolToClap}}" Grid.Row="1" Style="{DynamicResource MaterialDesignCardFlipper}" Margin="10" VerticalAlignment="Bottom"  HorizontalAlignment="Left" >
+                        <md:Flipper  Visibility="{Binding FlipCardVis, Converter={StaticResource BoolToClap}}" Grid.Row="1" Style="{DynamicResource MaterialDesignCardFlipper}" Margin="10" VerticalAlignment="Bottom"  HorizontalAlignment="Right" >
                             <md:Flipper.FrontContent>
                                 <Border MinWidth="150" Margin="3" CornerRadius="5" BorderThickness="3" BorderBrush="DimGray" Opacity=".8" Background="{StaticResource MaterialDesignToolBarBackground}">
                                     <Grid Margin="10">
@@ -373,6 +373,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                             <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
+                                            <RowDefinition />
                                             <RowDefinition Height="30"/>
                                         </Grid.RowDefinitions>
                                         <CheckBox Grid.Row="0" Content="{StaticResource topRaShort}" IsChecked="{Binding Path=RaVis}" />
@@ -386,7 +387,8 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                                         <CheckBox Grid.Row="8" Content="{StaticResource Sop}" IsChecked="{Binding Path=SopVis}" />
                                         <CheckBox Grid.Row="9" Content="{StaticResource topName}" IsChecked="{Binding Path=DescriptionVis}" />
                                         <CheckBox Grid.Row="10" Content="{StaticResource dCamera}" IsChecked="{Binding Path=CameraVis}" />
-                                        <Button Grid.Row="11" Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static md:Flipper.FlipCommand}" HorizontalAlignment="Left">
+                                        <CheckBox Grid.Row="11" Content="{StaticResource dCube}" IsChecked="{Binding Path=CubeVis}" />
+                                        <Button Grid.Row="12" Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static md:Flipper.FlipCommand}" HorizontalAlignment="Left">
                                             <md:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" Width="30" Height="30" />
                                         </Button>
                                     </Grid>

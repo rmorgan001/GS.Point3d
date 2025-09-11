@@ -1,5 +1,5 @@
 ﻿<!--
-    /* Copyright(C) 2021  Rob Morgan (robert.morgan.e@gmail.com)
+    /* Copyright(C) 2025  Rob Morgan (robert.morgan.e@gmail.com)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +21,7 @@ along with this program.  If not, see<https: //www.gnu.org/licenses/> .
                  xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
                  xmlns:point3D="clr-namespace:GS.Point3D"
                  xmlns:viewModels="clr-namespace:GS.Point3D.ViewModels"
-                 mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainWindowVM, IsDesignTimeCreatable=True}">
+                 mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainWindowVm, IsDesignTimeCreatable=True}">
     <StackPanel Background="Black">
         <Grid MinWidth="100">
             <Grid.ColumnDefinitions>
