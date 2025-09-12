@@ -22,11 +22,12 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using ASCOM.DriverAccess;
 using ASCOM.Utilities;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GS.Point3D.Controls;
 using GS.Point3D.Helpers;
 using GS.Point3D.Models;
@@ -35,8 +36,6 @@ using GS.Point3D.Views;
 using HelixToolkit.Wpf;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
 using Model3D = GS.Point3D.Models.Model3D;
 using Timer = System.Timers.Timer;
 
@@ -1518,11 +1517,11 @@ namespace GS.Point3D.ViewModels
             IsDialogOpen = false;
         }
 
-        private ICommand CancelDialogCmd { get; set; }
-        private void CancelDialog()
-        {
-            IsDialogOpen = false;
-        }
+        //private ICommand CancelDialogCmd { get; set; }
+        //private void CancelDialog()
+        //{
+        //    IsDialogOpen = false;
+        //}
 
         //private ICommand RunMessageDialogCmd { get; set; }
         //private async void ExecuteMessageDialog()
