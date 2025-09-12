@@ -14,16 +14,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using ASCOM.DriverAccess;
 using ASCOM.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -36,6 +26,16 @@ using GS.Point3D.Views;
 using HelixToolkit.Wpf;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using Model3D = GS.Point3D.Models.Model3D;
 using Timer = System.Timers.Timer;
 
@@ -75,7 +75,7 @@ namespace GS.Point3D.ViewModels
                     };
                     Helpers.Monitor.LogToMonitor(monitorItem);
 
-                    
+
                     Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
                     Title = Application.Current.Resources["titleName"].ToString();
                     IntervalList = new List<double>(Numbers.InclusiveRange(20, 5000, 10));
@@ -103,7 +103,7 @@ namespace GS.Point3D.ViewModels
                     theme.SetBaseTheme(GeneralSettings.DarkTheme ? Theme.Dark : Theme.Light);
                     paletteHelper.SetTheme(theme);
 
-                    if(GeneralSettings.AutoConnect){Connect(true);}
+                    if (GeneralSettings.AutoConnect) { Connect(true); }
 
                     if (!GeneralSettings.FirstRun) return;
                     var msg = $"{Application.Current.Resources["FirstMsg"]}" + Environment.NewLine;
@@ -213,7 +213,7 @@ namespace GS.Point3D.ViewModels
         #endregion
 
         #region Viewport3D
-        
+
         public IList<double> XAxisOffsetList { get; }
 
         public double XOffset
@@ -291,7 +291,7 @@ namespace GS.Point3D.ViewModels
                 if (SetProperty(ref _upDirection, value)) { }
             }
         }
-        
+
         public bool FlipCardVis
         {
             get => GeneralSettings.FlipCardVis;
@@ -301,7 +301,7 @@ namespace GS.Point3D.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public bool RaVis
         {
             get => GeneralSettings.RaVis;
@@ -558,10 +558,10 @@ namespace GS.Point3D.ViewModels
                 }
                 //color weights
                 var materialWeights = MaterialHelper.CreateMaterial(new SolidColorBrush(Color.FromRgb(64, 64, 64)));
-                if (model.Children[1] is GeometryModel3D weights){weights.Material = materialWeights;}
+                if (model.Children[1] is GeometryModel3D weights) { weights.Material = materialWeights; }
                 //color bar
                 var materialBar = MaterialHelper.CreateMaterial(Brushes.Gainsboro);
-                if (model.Children[2] is GeometryModel3D bar){bar.Material = materialBar;}
+                if (model.Children[2] is GeometryModel3D bar) { bar.Material = materialBar; }
 
                 Model = model;
             }
@@ -583,7 +583,7 @@ namespace GS.Point3D.ViewModels
         }
         private void Rotate()
         {
-            var axes = Model3D.RotateModel( Axis0, Axis1, SouthernHemisphere);
+            var axes = Model3D.RotateModel(Axis0, Axis1, SouthernHemisphere);
             YAxis = axes[0];
             XAxis = axes[1];
         }
@@ -629,7 +629,7 @@ namespace GS.Point3D.ViewModels
 
         #region Polling
         private bool LogFirstPoll { get; set; }
-        
+
         private string _altitude;
         public string Altitude
         {
@@ -712,7 +712,7 @@ namespace GS.Point3D.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private double _axis1;
         public double Axis1
         {
@@ -794,7 +794,7 @@ namespace GS.Point3D.ViewModels
         {
             get
             {
-                var a = (Sop) PierSide;
+                var a = (Sop)PierSide;
                 return a == Helpers.Sop.None ? string.Empty : a.ToString();
             }
         }
@@ -838,7 +838,7 @@ namespace GS.Point3D.ViewModels
                     if (_timer.Enabled)
                     {
                         _timer.Stop();
-                        _timer.Interval = (int) value;
+                        _timer.Interval = (int)value;
                         _timer.Start();
                     }
                 }
@@ -850,18 +850,18 @@ namespace GS.Point3D.ViewModels
         {
             if (IsPollRunning) return;
 
-            if (_telescope == null){return;}
+            if (_telescope == null) { return; }
 
             LogFirstPoll = false;
 
-            Latitude =_telescope.SiteLatitude;
+            Latitude = _telescope.SiteLatitude;
             Longitude = _telescope.SiteLongitude;
             Description = _telescope.Description;
             var alignModeResulTryParse = Enum.TryParse(_telescope.AlignmentMode.ToString(), out AlignMode pAlignMode);
             AlignmentMode = alignModeResulTryParse ? pAlignMode : AlignMode.algUnknown;
             if (AlignmentMode != AlignMode.algGermanPolar)
             {
-               throw new Exception($"{Application.Current.Resources["exNoAlignmentMode"]}");
+                throw new Exception($"{Application.Current.Resources["exNoAlignmentMode"]}");
             }
 
             var monitorItem = new MonitorEntry
@@ -885,7 +885,7 @@ namespace GS.Point3D.ViewModels
                 _timer = new Timer((int)PollTime) { Enabled = true };
                 _timer.Elapsed += PollEvent;
             }
-            
+
             IsPollRunning = true;
         }
 
@@ -901,7 +901,7 @@ namespace GS.Point3D.ViewModels
             Description = null;
             ModelOn = false;
 
-            if (_timerTimeStamp == null){return;}
+            if (_timerTimeStamp == null) { return; }
             var monitorItem = new MonitorEntry
             {
                 Datetime = DateTime.Now,
@@ -913,7 +913,7 @@ namespace GS.Point3D.ViewModels
                 Message = $"{DateTime.Now - _timerTimeStamp}"
             };
             Helpers.Monitor.LogToMonitor(monitorItem);
-            
+
             _timerTimeStamp = null;
             ClearFlipCard();
             SaveSpecialSettings();
@@ -924,7 +924,7 @@ namespace GS.Point3D.ViewModels
             var hasLock = false;
             try
             {
-                if (_telescope == null){return;}
+                if (_telescope == null) { return; }
                 System.Threading.Monitor.TryEnter(_timerLock, ref hasLock);
                 if (!hasLock) { return; }
                 IsPollRunning = true;
@@ -937,7 +937,7 @@ namespace GS.Point3D.ViewModels
                 Dec = _telescope.Declination;
 
                 //convert axes to model
-                var raDec = Axes.RaDecToAxesXy(AlignmentMode, new[]{Ra, Dec});
+                var raDec = Axes.RaDecToAxesXy(AlignmentMode, new[] { Ra, Dec });
                 Axis0 = raDec[0];
                 Axis1 = raDec[1];
 
@@ -946,18 +946,18 @@ namespace GS.Point3D.ViewModels
                 // get other info
                 if (FlipCardVis)
                 {
-                    if (AltVis){Altitude = Util.DegreesToDMS(_telescope.Altitude, "° ", ":", "", 2);}
-                    if (AzVis){Azimuth = Util.DegreesToDMS(_telescope.Azimuth, "° ", ":", "", 2);}
-                    if (DecVis){Declination = Util.DegreesToDMS(Dec, "° ", ":", "", 2);}
-                    if (RaVis){RightAscension = Util.HoursToHMS(Ra, "h ", ":", "", 2);}
-                    if (RaAxisVis){DegX = $"{Math.Round(Axis0, 2)}°";}
-                    if (DecAxisVis){DegY = $"{Math.Round(Axis1, 2)}°";}
-                    if (SideVis){SiderealTime = Util.HoursToHMS(SideRealtime);}
-                    if (LhaVis){Lha = Util.HoursToHMS(Numbers.Ra2Ha12(Ra, SideRealtime));}
+                    if (AltVis) { Altitude = Util.DegreesToDMS(_telescope.Altitude, "° ", ":", "", 2); }
+                    if (AzVis) { Azimuth = Util.DegreesToDMS(_telescope.Azimuth, "° ", ":", "", 2); }
+                    if (DecVis) { Declination = Util.DegreesToDMS(Dec, "° ", ":", "", 2); }
+                    if (RaVis) { RightAscension = Util.HoursToHMS(Ra, "h ", ":", "", 2); }
+                    if (RaAxisVis) { DegX = $"{Math.Round(Axis0, 2)}°"; }
+                    if (DecAxisVis) { DegY = $"{Math.Round(Axis1, 2)}°"; }
+                    if (SideVis) { SiderealTime = Util.HoursToHMS(SideRealtime); }
+                    if (LhaVis) { Lha = Util.HoursToHMS(Numbers.Ra2Ha12(Ra, SideRealtime)); }
                 }
 
-                if (LogFirstPoll){return;}
-                
+                if (LogFirstPoll) { return; }
+
                 var msg = $"Latitude={Util.DegreesToDMS(_telescope.SiteLatitude, "° ", ":", "", 2)}, ";
                 msg += $"Longitude={Util.DegreesToDMS(_telescope.SiteLongitude, "° ", ":", "", 2)}, ";
                 msg += $"Altitude={Util.DegreesToDMS(_telescope.Altitude, "° ", ":", "", 2)}, ";
@@ -1165,7 +1165,7 @@ namespace GS.Point3D.ViewModels
             try
             {
                 LogCmd(MethodBase.GetCurrentMethod()?.Name);
-                var chooser = new Chooser {DeviceType = "Telescope"};
+                var chooser = new Chooser { DeviceType = "Telescope" };
                 var id = chooser.Choose(TelescopeId);
                 chooser.Dispose();
                 if (string.IsNullOrEmpty(id)) { return; }
@@ -1338,7 +1338,7 @@ namespace GS.Point3D.ViewModels
             get => _windowHeight;
             set
             {
-                if (Math.Abs(value - _windowHeight) < 10) {return;}
+                if (Math.Abs(value - _windowHeight) < 10) { return; }
                 if (SetProperty(ref _windowHeight, value)) { }
             }
         }
@@ -1349,7 +1349,7 @@ namespace GS.Point3D.ViewModels
             get => _windowWidth;
             set
             {
-                if (Math.Abs(value - _windowWidth) < 10){return;}
+                if (Math.Abs(value - _windowWidth) < 10) { return; }
                 if (SetProperty(ref _windowWidth, value)) { }
             }
         }
@@ -1360,7 +1360,7 @@ namespace GS.Point3D.ViewModels
             get => _windowLeft;
             set
             {
-                if (Math.Abs(value - _windowLeft) < 10) {return;}
+                if (Math.Abs(value - _windowLeft) < 10) { return; }
                 if (SetProperty(ref _windowLeft, value)) { }
             }
         }
@@ -1371,7 +1371,7 @@ namespace GS.Point3D.ViewModels
             get => _windowTop;
             set
             {
-                if (Math.Abs(value - _windowTop) < 10) {return;}
+                if (Math.Abs(value - _windowTop) < 10) { return; }
                 if (SetProperty(ref _windowTop, value)) { }
             }
         }
@@ -1382,7 +1382,7 @@ namespace GS.Point3D.ViewModels
             get
             {
                 var cmd = _minimizeWindowCmd;
-                if (cmd != null){return cmd;}
+                if (cmd != null) { return cmd; }
                 return _minimizeWindowCmd = new RelayCommand(MinimizeWindow);
             }
         }
@@ -1398,7 +1398,7 @@ namespace GS.Point3D.ViewModels
             get
             {
                 var cmd = _maximizeWindowCmd;
-                if (cmd != null){return cmd;}
+                if (cmd != null) { return cmd; }
                 return _maximizeWindowCmd = new RelayCommand(MaximizeWindow);
             }
         }
@@ -1414,7 +1414,7 @@ namespace GS.Point3D.ViewModels
             get
             {
                 var cmd = _closeWindowCmd;
-                if (cmd != null){return cmd;}
+                if (cmd != null) { return cmd; }
                 return _closeWindowCmd = new RelayCommand(CloseWindow);
             }
         }
@@ -1456,7 +1456,7 @@ namespace GS.Point3D.ViewModels
             get => _isDialogOpen;
             set
             {
-                if (SetProperty(ref _isDialogOpen, value )) { }
+                if (SetProperty(ref _isDialogOpen, value)) { }
             }
         }
 

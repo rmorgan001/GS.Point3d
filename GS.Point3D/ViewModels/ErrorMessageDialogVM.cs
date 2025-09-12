@@ -14,9 +14,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using GS.Point3D.Domain;
 using System;
 using System.ComponentModel;
-using GS.Point3D.Domain;
 
 namespace GS.Point3D.ViewModels
 {

@@ -14,9 +14,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
 using GS.Point3D.Helpers;
 using GS.Point3D.ViewModels;
+using System;
 
 namespace GS.Point3D.Models
 {
@@ -26,7 +26,7 @@ namespace GS.Point3D.Models
 
         static Axes()
         {
-             MainWindowLocalVm = MainWindowVm.MainWindowVmLocal;
+            MainWindowLocalVm = MainWindowVm.MainWindowVmLocal;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace GS.Point3D.Models
         /// <returns></returns>
         internal static double[] RaDecToAxesXy(AlignMode mode, double[] raDec)
         {
-            var axes = new[] {raDec[0], raDec[1]};
+            var axes = new[] { raDec[0], raDec[1] };
             switch (mode)
             {
                 case AlignMode.algAltAz:
@@ -45,7 +45,7 @@ namespace GS.Point3D.Models
                     return axes;
                 case AlignMode.algGermanPolar:
                     axes[0] = (MainWindowLocalVm.SideRealtime - axes[0]) * 15.0;
-                    if (MainWindowLocalVm.SouthernHemisphere){axes[1] = -axes[1];}
+                    if (MainWindowLocalVm.SouthernHemisphere) { axes[1] = -axes[1]; }
 
                     MainWindowLocalVm.Axis2 = axes[0];
                     MainWindowLocalVm.Axis3 = axes[1];
@@ -111,7 +111,7 @@ namespace GS.Point3D.Models
         /// <returns>other axis position</returns>
         private static double[] GetAltAxisPosition(double[] alt)
         {
-            var d = new[] {0.0, 0.0};
+            var d = new[] { 0.0, 0.0 };
             if (alt[0] > 90)
             {
                 d[0] = alt[0] - 180;

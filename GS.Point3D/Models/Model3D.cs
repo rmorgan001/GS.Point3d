@@ -14,9 +14,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using GS.Point3D.Helpers;
 using System;
 using System.Reflection;
-using GS.Point3D.Helpers;
 
 namespace GS.Point3D.Models
 {

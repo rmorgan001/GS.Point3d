@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GS.Point3D.Helpers;
+using System;
 using System.Windows;
-using GS.Point3D.Helpers;
 
 namespace GS.Point3D
 {

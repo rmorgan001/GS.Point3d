@@ -13,6 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+using GS.Point3D.Settings;
 using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
@@ -20,7 +21,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using GS.Point3D.Settings;
 
 namespace GS.Point3D.Helpers
 {
@@ -76,7 +76,7 @@ namespace GS.Point3D.Helpers
         }
 
         #endregion
-        
+
 
         #region Methods
 
@@ -116,7 +116,7 @@ namespace GS.Point3D.Helpers
         /// <param name="entry"></param>
         public static void AddEntry(MonitorEntry entry)
         {
-             MonitorBlockingCollection.TryAdd(entry);
+            MonitorBlockingCollection.TryAdd(entry);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace GS.Point3D.Helpers
                 //throw;
             }
         }
-        
+
         /// <summary>
         /// Send monitor entries to a file async
         /// </summary>

@@ -13,6 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+using GS.Point3D.Settings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,7 +23,6 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
-using GS.Point3D.Settings;
 
 namespace GS.Point3D.Helpers
 {

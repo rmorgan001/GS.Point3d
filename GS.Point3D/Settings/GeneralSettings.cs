@@ -14,6 +14,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using GS.Point3D.Helpers;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -22,7 +23,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Media3D;
-using GS.Point3D.Helpers;
 using Monitor = GS.Point3D.Helpers.Monitor;
 
 namespace GS.Point3D.Settings
@@ -395,7 +395,7 @@ namespace GS.Point3D.Settings
                 OnStaticPropertyChanged();
             }
         }
-        
+
         private static bool _topMost;
         public static bool TopMost
         {
@@ -534,7 +534,7 @@ namespace GS.Point3D.Settings
                 OnStaticPropertyChanged();
             }
         }
-        
+
         #endregion
 
         #region Methods      
